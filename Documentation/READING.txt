@@ -1,0 +1,16 @@
+###
+1. What is HOMA trying to do?
+    Homa is a transport protocol for datacenter networks. Its goal to
+    achieve low latency, especially for workloads with high volume
+    of vert short message.
+
+2. How to implement it?
+    Homa uses in-network priority queues to ensure low latency for
+    short messages; priority allocation is managed daynamically by
+    each receiver and integrated with a receiver-driven flow control
+    mechanism. Also, Homa uses controlled overcommitment of receiver
+    downlinks to ensure efficient bandwidth utilization at high
+    load.
+
+
+
