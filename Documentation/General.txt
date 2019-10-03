@@ -14,4 +14,15 @@
 7. Application: WWW, FTP, SNMP
 
 
+### The RPC Model
+    The remote procedure call model is similar to that of the local model,
+    which works as follows:
 
+    The caller places arguments to a procedure in a specific location
+    (such as a result register).
+
+    The caller temporarily transfers control to the procedure.
+    When the caller gains control again, it obtains the results
+    of the procedure from the specified location.
+
+    The caller then continues program execution.
