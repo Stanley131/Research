@@ -1,4 +1,12 @@
-Simple Structure:
+
+
+10/2~10/8: GOAL: 1. figure out a simple struture for RPC by using grants.
+                 2. Primarliy implement Priority.
+                    : Figure out different workload situations used in the HOMA
+                    : Unscheduled vs schedule
+                    : data struture for the priority since we need to adjust it all the time
+
+                  Not: No eorror handling so far....
 
 
 
