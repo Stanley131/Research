@@ -12,4 +12,84 @@
     downlinks to ensure efficient bandwidth utilization at high
     load.
 
+3. Incast
+    TCP incast congestion happens in high-bandwidth and low-latency networks,
+    when multiple synchronized servers send data to a same receiver in parallel.
+    For many important data center applications such as MapReduce and Search,
+    this many-to-one traffic pattern is common
+
+3.7 Lost packets
+    Rare in HOMA
+
+    2 ways og losing packets (A typical packet contains perhaps 1,000 or 1,500 bytes.)
+
+        corruption in the network
+        buffer overflow
+            Corrucption is exrememly rate in modern datacenter networks
+            Homa Reduces buffer usage enough to make buffer overflows uncommon
+
+        Homa optimizes lost-packets are not lost, and for simplicity when packets
+        are lost
+
+    In TCP, senders are responsinle for detecting lost packets, requiring acknowledage-
+    ment.
+
+    Remote Procedure Call (RPC): No details
+
+    TCP overhead
+
+
+###########################
+    Homa does not use any explicit acknowledgement
+
+    Receiver use a simple time-out mechanism to detect lost packets
+
+    If a long time (a few miliseconds elapses without additional packets.
+    RESEND the request missing bytes)
+
+
+    If all of the initial packets of am RPC request are lost, the server will not
+    know about the message. So no RESEND
+
+
+    If a client receives no response to a RESEND, reties serveral times, then eventually
+    abort it
+
+###############
+
+
+3.8 At-least-once semantics
+
+    1. tradtionally, RPC protocols have traditionally implemented at most once semant-
+    ics, where each RPC is excuted exactly once in the normal case; Error case, 1 or
+    None.
+
+    Homa allows RPC once or more, Error, any times
+
+    First, no connection state, dulicapte, reexceute
+    Second, on obvious time at which it is safe to discard the response
+
+
+4. Implementation
+
+    transpaort software overhead: 1-2 us
+
+    Homa detects incoming packets with polling rather than interrupt.
+
+    3660 line of code
+
+    In order for a sender to implemment SRPT precisely, it must keep the transmit queue
+    in the NIC short(Network interface card)
+
+################################################
+    8 nodes vs 8 nodes
+
+        Posisson arrivals configured to generate workload
+
+        Each client echos RPC
+
+
+
+
+################################################
 
