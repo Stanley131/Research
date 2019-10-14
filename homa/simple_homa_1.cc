@@ -38,12 +38,18 @@ publicc:
    virtual void Print (std::ostream &os) const;
     
    // these are our accessors to our tag structure
-   void SetSimpleValue (uint8_t value);
-   uint8_t GetSimpleValue (void) const;
+   void SetPrio (uint8_t value);
+   uint8_t GePrio (void) const;
+   
+   void SetGrant (uint8_t value);
+   uint8_t GePrio (void) const;
 
+   void SetPrio (uint8_t value);
+   uint8_t GePrio (void) const;
 private:
     uint16_t m_prio;
     uint16_t m_grant;
+    uint32_t m_FlowId; 
 };
 
 TypeId 
@@ -59,6 +65,11 @@ homaMetadata::GetTypeId (void)
                            MakeUintegerChecker<uint8_t> ());
             .AddAttribute ("Grant",
                            "Homa Grant",
+                           EmptyAttributeValue (),
+                           MakeUintegerAccessor (&homaMetadata::GetGrant),
+                           MakeUintegerChecker<uint8_t> ());
+            .AddAttribute ("FlowId",
+                           "PacketFlowId",
                            EmptyAttributeValue (),
                            MakeUintegerAccessor (&homaMetadata::GetGrant),
                            MakeUintegerChecker<uint8_t> ());
@@ -82,6 +93,7 @@ homaMetadata::Serialize (TagBuffer i) const
 {
     i.WriteU8 (m_prio);
     i.WriteU8 (m_grant);
+    i.WriteU8 (m_FlowId);
 }
 
 
@@ -90,6 +102,7 @@ homaMetadata::Deserialize (TagBuffer i)
 {
     m_prio = i.ReadU8();
     m_grant = i.ReadU8();
+    m_FlowId = i.ReadU8();
 }
 
 
@@ -105,21 +118,32 @@ homaMetadata::SetGrant (uint8_t value)
     m_grant = value;
 }
 
-
 void
-homaMetadata::GetPrio (uint8_t value)
+homaMetadata::SetGrant (uint8_t value)
+{
+    m_FlowId = value;
+}
+
+
+int
+homaMetadata::GetPrio ()
 {
     return m_grant;
 }
 
 
-void
-homaMetadata::GetGrant (uint8_t value)
+int
+homaMetadata::GetGrant ()
 {
     return m_grant;
 }
 
 
+int
+homaMetadata::GetFlowId ()
+{
+    return m_FlowId;
+}
 
 
 
