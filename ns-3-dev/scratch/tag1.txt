@@ -1,0 +1,277 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#include "ns3/core-module.h"
+#include "ns3/network-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/point-to-point-module.h"
+#include "ns3/applications-module.h"
+//#include "homaTag.h"
+#include <iostream>
+#include <string>
+#include "ns3/tag.h"
+#include "ns3/packet.h"
+#include "ns3/uinteger.h"
+
+
+using namespace ns3;
+
+class MyTag : public Tag
+ {
+ public:
+   static TypeId GetTypeId (void);
+   virtual TypeId GetInstanceTypeId (void) const;
+   virtual uint32_t GetSerializedSize (void) const;
+   virtual void Serialize (TagBuffer i) const;
+   virtual void Deserialize (TagBuffer i);
+   virtual void Print (std::ostream &os) const;
+ 
+   // these are our accessors to our tag structure
+   void SetSimpleValue (uint8_t value);
+   uint8_t GetSimpleValue (void) const;
+ private:
+   uint8_t m_simpleValue;  
+ };
+ 
+ TypeId 
+ MyTag::GetTypeId (void)
+ {
+   static TypeId tid = TypeId ("ns3::MyTag")
+     .SetParent<Tag> ()
+     .AddConstructor<MyTag> ()
+     .AddAttribute ("SimpleValue",
+                    "A simple value",
+                    EmptyAttributeValue (),
+                    MakeUintegerAccessor (&MyTag::GetSimpleValue),
+                    MakeUintegerChecker<uint8_t> ())
+   ;
+   return tid;
+ }
+ TypeId 
+ MyTag::GetInstanceTypeId (void) const
+ {
+   return GetTypeId ();
+ }
+ uint32_t 
+ MyTag::GetSerializedSize (void) const
+ {
+   return 1;
+ }
+ void 
+ MyTag::Serialize (TagBuffer i) const
+ {
+   i.WriteU8 (m_simpleValue);
+ }
+ void 
+ MyTag::Deserialize (TagBuffer i)
+ {
+   m_simpleValue = i.ReadU8 ();
+ }
+ void 
+ MyTag::Print (std::ostream &os) const
+ {
+   os << "v=" << (uint32_t)m_simpleValue;
+ }
+ void 
+ MyTag::SetSimpleValue (uint8_t value)
+ {
+   m_simpleValue = value;
+ }
+ uint8_t 
+ MyTag::GetSimpleValue (void) const
+ {
+   return m_simpleValue;
+ }
+
+
+
+
+
+class homaTag : public Tag 
+{
+        public:
+            static TypeId GetTypeId (void);
+            virtual TypeId GetInstanceTypeId (void) const;
+            virtual uint32_t GetSerializedSize (void) const;
+            virtual void Serialize (TagBuffer i) const;
+            virtual void Deserialize (TagBuffer i);
+            virtual void Print (std::ostream &os) const;
+            
+            // these are our accessors to our tag structure
+            void SetPrio (uint16_t value);
+            uint16_t GetPrio (void) const;
+           
+            /*
+            void SetGrant (uint16_t value);
+            uint16_t GetGrant (void) const;
+            */
+            /*
+            void SetFlowId (uint32_t value);
+            uint32_t GetFlowId (void) const;
+            */
+        private:
+            uint16_t m_prio;    
+            //uint16_t m_grant;
+            //uint32_t m_FlowId; 
+};
+
+TypeId homaTag::GetTypeId (void)
+	{
+   		static TypeId tid = TypeId ("ns3::homaTag")
+     			.SetParent<Tag> ()
+     			.AddConstructor<homaTag> ()
+     			.AddAttribute ("prio",
+                    		"A priority value",
+                    		EmptyAttributeValue (),
+                    		MakeUintegerAccessor (&homaTag::GetPrio),
+                      		MakeUintegerChecker<uint16_t> ())
+                ;
+                /*
+                .AddAttribute ("grant",
+                    		"A Grant value",
+                    		EmptyAttributeValue (),
+                    		MakeUintegerAccessor (&homaTag::GetGrant),
+                    		MakeUintegerChecker<uint16_t> ())
+     			;
+                
+                .AddAttribute ("flowId",
+                    		"A FlowId value",
+                    		EmptyAttributeValue (),
+                    		MakeUintegerAccessor (&homaTag::GetFlowId),
+                    		MakeUintegerChecker<uint32_t> ());
+                */
+  	 	return tid;
+}
+
+    TypeId homaTag::GetInstanceTypeId (void) const
+    {
+        return GetTypeId ();
+    }
+
+    void homaTag::Print (std::ostream &os) const
+    {
+    //    os << "m_prio=" << (uint32_t)m_prio<< "  m_grant="<<(u_int32_t)m_grant
+      //  << " m_FlowId="<< (u_int32_t)m_FlowId;
+    }
+
+
+    void homaTag::Serialize (TagBuffer i) const
+    {
+        i.WriteU8 (m_prio);
+        //i.WriteU8 (m_grant);
+        //i.WriteU8 (m_FlowId);
+    }
+
+
+    void homaTag::Deserialize (TagBuffer i)
+    {
+        m_prio = i.ReadU8();
+        // m_grant = i.ReadU8();
+        //m_FlowId = i.ReadU8();
+    }
+
+    uint32_t homaTag::GetSerializedSize (void) const
+    {
+        return 1;
+    }
+
+    void homaTag::SetPrio (uint16_t value)
+    {
+        m_prio = value;
+    }
+
+    /*
+    void homaTag::SetGrant (uint16_t value)
+    {
+        m_grant = value;
+    }
+    
+    void homaTag::SetFlowId (uint32_t value)
+    {
+        m_FlowId = value;
+    }
+    */
+
+    uint16_t homaTag::GetPrio (void) const
+    {
+        return m_prio;
+    }
+    
+    /*  
+    uint16_t homaTag::GetGrant (void) const
+    {
+        return m_grant;
+    }
+    
+
+    uint32_t homaTag::GetFlowId (void) const
+    {
+        return m_FlowId;
+    }
+
+
+    */
+
+
+
+int
+main (int argc, char *argv[])
+{
+
+  
+
+  homaTag h_tag1;
+  MyTag h_tag2;
+  h_tag2.SetSimpleValue (0x56); 
+
+  //Add some simple date for testing
+  h_tag1.SetPrio(1);
+  //h_tag.SetGrant(2);
+  //h_tag.SetFlowId(3);
+
+  
+  std::cout<< "==========Client Sent Data==========\n"
+    <<"Prio: "<< h_tag1.GetPrio()<< "   "
+    <<"Grant: "<< h_tag2.GetSimpleValue()<< "   \n";
+    //<<"FlowId: "<< h_tag.GetFlowId()<< "   "<<"\n";
+  
+  
+  //Create a packet
+  Ptr<Packet> pkt_send = Create<Packet> ();
+  pkt_send -> AddPacketTag(h_tag1);
+  pkt_send -> AddPacketTag(h_tag2);
+
+  //Create a copy of the packet
+  Ptr<Packet> p_copy = pkt_send->Copy ();
+
+  
+  //Read the tag
+  homaTag tagCopy1;
+  MyTag tagCopy2;
+  p_copy->PeekPacketTag (tagCopy1);
+  p_copy->PeekPacketTag (tagCopy2);
+  
+  std::cout<< "==========Middle==========\n";
+
+  std::cout<< "==========Copy Received Data==========\n"
+    <<"prio: "<< tagCopy1.GetPrio()<< " \n "
+    <<"prio: "<< tagCopy2.GetSimpleValue()<< " \n ";
+    //<<"Grant: "<< tagCopy2.GetSimpleValue()<< "   \n";
+    //<<"Grant: "<< tagCopy.GetGrant()<< "  \n";
+   // <<"FlowId: "<< tagCopy.GetFlowId()<< "   "<<"\n";
+
+  return 0;
+}

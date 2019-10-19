@@ -19,7 +19,7 @@
 #include "ns3/internet-module.h"
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
-
+#include "homa/homaTag.h"
 
 using namespace ns3;
 
@@ -60,10 +60,44 @@ main (int argc, char *argv[])
   serverApps.Stop (Seconds (10.0));
 
   UdpEchoClientHelper echoClient (interfaces.GetAddress (1), 9);
+
+  char *msg = "I don't like raining."
+  //Create a packet 
+  Ptr<Packet> pkt_send = Create<Packet> (reinterpret_cast<const uint8_t*> (msg), 100);
+  
+  homaMetadata homaTag; 
+  
+  //Add some simple date for testing 
+  homaTag.SetPrio(1); 
+  homaTag.SetGrant(2); 
+  homaTag.SetFlowId(3);
+
+  cout<< "==========Client Sent Data=========="<<endl
+    <<"Prio: "<< homaTag.GetPrio()<< "   "
+    <<"Grant: "<< homaTag.GetGrant()<< "   "
+    <<"FlowId: "<< homaTag.GeFlowId()<< "   "
+    <<endl; 
+
+  //Add homaTag to a packet 
+  pkt_send -> AddPacketTag(homaTag); 
+
+  //Create a copy of the packet
+  //Ptr<Packet> p_copy = pkt_send->Copy ();
+ 
+  //pkt_send.AddPacketTag()
   echoClient.SetAttribute ("MaxPackets", UintegerValue (1));
   echoClient.SetAttribute ("Interval", TimeValue (Seconds (1.0)));
   echoClient.SetAttribute ("PacketSize", UintegerValue (1024));
 
+  //Read the tag
+  homaTag tagCopy;
+  p_copy->PeekPacketTag (tagCopy);
+
+  cout<< "==========Copy Sent Data=========="<<endl
+    <<"Prio: "<< tagCopy.GetPrio()<< "   "
+    <<"Grant: "<< tagCopy.GetGrant()<< "   "
+    <<"FlowId: "<< tagCopy.GeFlowId()<< "   "
+    <<endl; 
   ApplicationContainer clientApps = echoClient.Install (nodes.Get (0));
   clientApps.Start (Seconds (2.0));
   clientApps.Stop (Seconds (10.0));
