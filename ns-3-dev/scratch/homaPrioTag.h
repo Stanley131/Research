@@ -1,9 +1,12 @@
+#ifndef HOMAPRIOTAG_H
+#define HOMAPRIOTAG_H
+
+
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
 #include "ns3/internet-module.h"
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
-//#include "homaTag.h"
 #include <iostream>
 #include <string>
 #include "ns3/tag.h"
@@ -12,8 +15,9 @@
 
 using namespace ns3;
 
-class homaTag : public Tag 
-{
+namespace ns3 {
+    class homaPrioTag : public Tag 
+    {
         public:
             static TypeId GetTypeId (void);
             virtual TypeId GetInstanceTypeId (void) const;
@@ -38,5 +42,6 @@ class homaTag : public Tag
             uint16_t m_prio;    
             //uint16_t m_grant;
             //uint32_t m_FlowId; 
-};
-
+    };
+}
+#endif 

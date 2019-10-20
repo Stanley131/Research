@@ -3,7 +3,6 @@
 #include "ns3/internet-module.h"
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
-//#include "homaTag.h"
 #include <iostream>
 #include <string>
 #include "ns3/tag.h"
@@ -13,47 +12,50 @@
 
 using namespace ns3; 
 
-TypeId homaTag::GetTypeId (void)
+namespace ns3 {
+    NS_OBJECT_ENSURE_REGISTERED (homaPrioTag);
+ 
+    TypeId homaPrioTag::GetTypeId (void)
 	{
-   		static TypeId tid = TypeId ("ns3::homaTag")
+   		static TypeId tid = TypeId ("ns3::homaPrioTag")
      			.SetParent<Tag> ()
-     			.AddConstructor<homaTag> ()
+     			.AddConstructor<homaPrioTag> ()
      			.AddAttribute ("prio",
                     		"A priority value",
                     		EmptyAttributeValue (),
-                    		MakeUintegerAccessor (&homaTag::GetPrio),
+                    		MakeUintegerAccessor (&homaPrioTag::GetPrio),
                       		MakeUintegerChecker<uint16_t> ())
                 ;
                 /*
                 .AddAttribute ("grant",
                     		"A Grant value",
                     		EmptyAttributeValue (),
-                    		MakeUintegerAccessor (&homaTag::GetGrant),
+                    		MakeUintegerAccessor (&homaPrioTag::GetGrant),
                     		MakeUintegerChecker<uint16_t> ())
      			;
                 
                 .AddAttribute ("flowId",
                     		"A FlowId value",
                     		EmptyAttributeValue (),
-                    		MakeUintegerAccessor (&homaTag::GetFlowId),
+                    		MakeUintegerAccessor (&homaPrioTag::GetFlowId),
                     		MakeUintegerChecker<uint32_t> ());
                 */
   	 	return tid;
-}
+    }
 
-    TypeId homaTag::GetInstanceTypeId (void) const
+    TypeId homaPrioTag::GetInstanceTypeId (void) const
     {
         return GetTypeId ();
     }
 
-    void homaTag::Print (std::ostream &os) const
+    void homaPrioTag::Print (std::ostream &os) const
     {
     //    os << "m_prio=" << (uint32_t)m_prio<< "  m_grant="<<(u_int32_t)m_grant
       //  << " m_FlowId="<< (u_int32_t)m_FlowId;
     }
 
 
-    void homaTag::Serialize (TagBuffer i) const
+    void homaPrioTag::Serialize (TagBuffer i) const
     {
         i.WriteU8 (m_prio);
         //i.WriteU8 (m_grant);
@@ -61,52 +63,52 @@ TypeId homaTag::GetTypeId (void)
     }
 
 
-    void homaTag::Deserialize (TagBuffer i)
+    void homaPrioTag::Deserialize (TagBuffer i)
     {
         m_prio = i.ReadU8();
         // m_grant = i.ReadU8();
         //m_FlowId = i.ReadU8();
     }
 
-    uint32_t homaTag::GetSerializedSize (void) const
+    uint32_t homaPrioTag::GetSerializedSize (void) const
     {
         return 1;
     }
 
-    void homaTag::SetPrio (uint16_t value)
+    void homaPrioTag::SetPrio (uint16_t value)
     {
         m_prio = value;
     }
 
     /*
-    void homaTag::SetGrant (uint16_t value)
+    void homaPrioTag::SetGrant (uint16_t value)
     {
         m_grant = value;
     }
     
-    void homaTag::SetFlowId (uint32_t value)
+    void homaPrioTag::SetFlowId (uint32_t value)
     {
         m_FlowId = value;
     }
     */
 
-    uint16_t homaTag::GetPrio (void) const
+    uint16_t homaPrioTag::GetPrio (void) const
     {
         return m_prio;
     }
     
     /*  
-    uint16_t homaTag::GetGrant (void) const
+    uint16_t homaPrioTag::GetGrant (void) const
     {
         return m_grant;
     }
     
 
-    uint32_t homaTag::GetFlowId (void) const
+    uint32_t homaPrioTag::GetFlowId (void) const
     {
         return m_FlowId;
     }
 
 
     */
-
+}

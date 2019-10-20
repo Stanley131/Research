@@ -19,17 +19,16 @@
 #include "ns3/internet-module.h"
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
-//#include "homaTag.h"
 #include <iostream>
 #include <string>
 #include "ns3/tag.h"
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
-
+#include "homaPrioTag.h"
 
 using namespace ns3;
 
-
+/*
 class homaPrioTag : public Tag 
 {
         public:
@@ -47,6 +46,7 @@ class homaPrioTag : public Tag
         private:
             uint16_t m_prio;    
 };
+*/
 
 class homaGrantTag : public Tag 
 {
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
-
+/*
 
     TypeId homaPrioTag::GetTypeId (void)
 	{
@@ -189,7 +189,7 @@ main (int argc, char *argv[])
     {
         return m_prio;
     }
-    
+  */  
 
     TypeId homaGrantTag::GetTypeId (void)
 	{
