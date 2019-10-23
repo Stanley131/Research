@@ -1,0 +1,42 @@
+Progress:
+
+1. Finished:
+    Date   Tasks
+    10/19  Tags: Prio, Grant, FlowId
+
+
+
+2.Problems:
+    Date   Tasks
+    10/19  Cannot link separate .h or .cc files in ns3
+
+
+
+
+3.Working On:
+    Date   Tasks
+    10/19  Exend UDP to make RPC, mainly override sned
+    10/23  Modulize Homa Task 
+
+
+
+4. Need to do:
+    homa priority calculation
+    homa logic simulation
+
+
+How to use it?
+
+1. Download config 
+	python download.py
+
+
+2. Export Path  
+	export BAKE_HOME=`pwd`
+	export PATH=$PATH:$BAKE_HOME:$BAKE_HOME/build/bin
+ 	export PYTHONPATH=$PYTHONPATH:$BAKE_HOME:$BAKE_HOME/build/lib	
+
+3. Build ns3 
+	./build.py --enable-examples --enable-tests
+
+	
