@@ -1,0 +1,4 @@
+# Ignore everything in this directory
+*.pptx
+# Except this file
+!.gitignore

@@ -1,0 +1,12 @@
+#ignore everything in OMNeT++Simulation directory
+#except the homatransport directory
+!OMNeT++Simulation
+OMNeT++Simulation/*
+!OMNeT++Simulation/README.md
+!OMNeT++Simulation/homatransport
+!OMNeT++Simulation/inet
+!OMNeT++Simulation/analysis
+!OMNeT++Simulation/test
+!OMNeT++Simulation/scripts
+!OMNeT++Simulation/GreedySRPTOracleScheduler
+ns2_Simulations/
