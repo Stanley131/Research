@@ -17,3 +17,9 @@ At line: 2469
 scp /Users/stanleyye/Downloads/omnetpp-4.6-src.tgz yy2922@34.68.42.166:/home/yy2922/
 omnetpp-4.6-src.tgz
 
+### Build OMNet++ 
+  1. https://doc.omnetpp.org/omnetpp/InstallGuide.pdf
+  2. https://github.com/PlatformLab/HomaSimulation/tree/omnet_simulations/RpcTransportDesign/OMNeT%2B%2BSimulation
+  
+
+
