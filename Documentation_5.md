@@ -56,15 +56,15 @@
      - class ReceiveScheduler: 
      - class TrackRTTs: 
      - PUBLIC:
-          - virtual void initialize();
-          - virtual void handleMessage(cMessage *msg);
-          - virtual void finish();
-          - ** // IpAddress of sender host (local host).**
-          - ** const inet::L3Address& getLocalAddr() {return localAddr;}**
-          - void handleRecvdPkt(cPacket* ptk);
-          - void processStart();
-          - void testAndEmitStabilitySignal();
-          - void registerTemplatedStats();
+           - virtual void initialize();  
+           - virtual void handleMessage(cMessage *msg);  
+           - virtual void finish();  
+           - ** // IpAddress of sender host (local host).** .  
+           - ** const inet::L3Address& getLocalAddr() {return localAddr;}** .  
+           - void handleRecvdPkt(cPacket* ptk);  
+           - void processStart();   
+           - void testAndEmitStabilitySignal();  
+           - void registerTemplatedStats();  
         
      
      
