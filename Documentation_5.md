@@ -44,13 +44,13 @@
           - **typedef std::priority_queue<HomaPkt*,std::vector<HomaPkt*>,OutbndPktSorter> OutbndPktQueue;**
             
          PUBLIC: 
-            - const uint32_t& getMsgSize()
-            - **const uint64_t& getMsgId()**
-            - const OutbndPktQueue& getTxPktQueue() 
-            - const std::unordered_set<HomaPkt*>&
-            - **const uint32_t getBytesLeft()**
-            - **const simtime_t getMsgCreationTime()**
-            - bool getTransmitReadyPkt(HomaPkt** outPkt)
+            - const uint32_t& getMsgSize()  
+            - **const uint64_t& getMsgId()**  
+            - const OutbndPktQueue& getTxPktQueue()  
+            - const std::unordered_set<HomaPkt*>&  
+            - **const uint32_t getBytesLeft()**  
+            - **const simtime_t getMsgCreationTime()**  
+            - bool getTransmitReadyPkt(HomaPkt** outPkt)  
      - class SendController:
      - class InboundMessage: 
      - class ReceiveScheduler: 
