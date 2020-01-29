@@ -37,8 +37,25 @@
         - uint32_t totalBytesInFlight;
         - uint32_t bytesToReceive；
         - uint32_t msgSize;
-    -  class SchedSenders： 
-        - class SchedState
+        
+   HomeTransport.h structure 
+   - class HomaTransport : public cSimpleModule
+     PUBLIC: 
+     - class OutboundMessage 
+          - **typedef std::priority_queue<HomaPkt*,std::vector<HomaPkt*>,OutbndPktSorter> OutbndPktQueue;**
+            
+         PUBLIC: 
+         - const uint32_t& getMsgSize()
+         - **const uint64_t& getMsgId()**
+         - const OutbndPktQueue& getTxPktQueue() 
+         - const std::unordered_set<HomaPkt*>&
+         - **const uint32_t getBytesLeft()**
+         - **const simtime_t getMsgCreationTime()**
+         - bool getTransmitReadyPkt(HomaPkt** outPkt)
+     
+     
+     
+     
         
 ### Change Prio
   - Research_PBS_HOMA/OMNet++_HOMA/RpcTransportDesign/OMNeT++Simulation/homatransport/src/transport/HomaTransport.c   
