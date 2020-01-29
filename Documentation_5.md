@@ -39,19 +39,33 @@
         - uint32_t msgSize;
         
    HomeTransport.h structure 
-   - class HomaTransport : public cSimpleModule
-     PUBLIC: 
-     - class OutboundMessage 
+   - class HomaTransport : public cSimpleModule: 
+     - class OutboundMessage:  
           - **typedef std::priority_queue<HomaPkt*,std::vector<HomaPkt*>,OutbndPktSorter> OutbndPktQueue;**
             
          PUBLIC: 
-         - const uint32_t& getMsgSize()
-         - **const uint64_t& getMsgId()**
-         - const OutbndPktQueue& getTxPktQueue() 
-         - const std::unordered_set<HomaPkt*>&
-         - **const uint32_t getBytesLeft()**
-         - **const simtime_t getMsgCreationTime()**
-         - bool getTransmitReadyPkt(HomaPkt** outPkt)
+            - const uint32_t& getMsgSize()
+            - **const uint64_t& getMsgId()**
+            - const OutbndPktQueue& getTxPktQueue() 
+            - const std::unordered_set<HomaPkt*>&
+            - **const uint32_t getBytesLeft()**
+            - **const simtime_t getMsgCreationTime()**
+            - bool getTransmitReadyPkt(HomaPkt** outPkt)
+     - class SendController:
+     - class InboundMessage: 
+     - class ReceiveScheduler: 
+     - class TrackRTTs: 
+     - PUBLIC:
+          - virtual void initialize();
+          - virtual void handleMessage(cMessage *msg);
+          - virtual void finish();
+          - ** // IpAddress of sender host (local host).**
+          - ** const inet::L3Address& getLocalAddr() {return localAddr;}**
+          - void handleRecvdPkt(cPacket* ptk);
+          - void processStart();
+          - void testAndEmitStabilitySignal();
+          - void registerTemplatedStats();
+        
      
      
      
