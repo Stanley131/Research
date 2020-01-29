@@ -52,9 +52,14 @@
             - **const simtime_t getMsgCreationTime()**  
             - bool getTransmitReadyPkt(HomaPkt** outPkt)  
      - class SendController:
-     - class InboundMessage: 
+         - class InboundMessage: 
      - class ReceiveScheduler: 
-     - class TrackRTTs: 
+        - class SenderState:
+           - **const inet::IPv4Address& getSenderAddr()** 
+        - class SchedSenders: 
+           - 
+        - class TrackRTTs: 
+        - 
      - PUBLIC:
            - virtual void initialize();  
            - virtual void handleMessage(cMessage *msg);  
