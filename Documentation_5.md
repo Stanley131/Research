@@ -54,12 +54,10 @@
      - class SendController:
          - class InboundMessage: 
      - class ReceiveScheduler: 
-        - class SenderState:
+         - class SenderState:
            - **const inet::IPv4Address& getSenderAddr()** 
-        - class SchedSenders: 
-           - 
-        - class TrackRTTs: 
-        - 
+         - class SchedSenders: 
+         - class TrackRTTs: 
      - PUBLIC:
            - virtual void initialize();  
            - virtual void handleMessage(cMessage *msg);  
