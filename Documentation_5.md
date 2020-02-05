@@ -77,6 +77,5 @@
      - HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
      - line:  2471
  
-    - HomaConfigDepot* homaConfig;
-  
+    - HomaConfigDepot* homaConfig; //Collection of user provided config parameters for the transport.
   
