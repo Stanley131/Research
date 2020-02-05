@@ -70,16 +70,13 @@
            - void registerTemplatedStats();  
         
      
-     
-     
-     
+    
         
 ### Change Prio
   - Research_PBS_HOMA/OMNet++_HOMA/RpcTransportDesign/OMNeT++Simulation/homatransport/src/transport/HomaTransport.c   
      - HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
      - line:  2471
  
-  
-  
+    - HomaConfigDepot* homaConfig;
   
   
