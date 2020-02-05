@@ -4,3 +4,8 @@
 
 ### Verify Parameters
   - UNFINISHED CODE
+  - Add one parameter  in SenderState class , NOOO
+  
+### Best place to place our algorithm 
+  - HomaTransport::ReceiveScheduler::processReceivedPkt(HomaPkt* rxPkt) .  line 1262 
+  - 
