@@ -25,3 +25,52 @@ initialize -- this includes building the model and
 If possible, avoid using global variables, including static class members. They are prone to cause several problems. First, they are not reset to their initial values (to zero) when you rebuild the simulation in Tkenv, or start another run in Cmdenv. This may produce surprising results. Second, they prevent you from running your simulation in parallel. When using parallel simulation, each partition of your model (may) run in a separate process, having its own copy of the global variables. This is usually not what you want.
 
 The solution is to encapsulate the variables into simple modules as private or protected data members, and expose them via public methods. Other modules can then call these public methods to get or set the values. Calling methods of other modules will be discussed in section [4.12]. Examples of such modules are the Blackboard in the Mobility Framework, and InterfaceTable and RoutingTable in the INET Framework.
+
+
+
+The NED properties of a parameter can be accessed with the getProperties() method that returns a pointer to the cProperties object that stores the properties of this parameter. Specifically, getUnit() returns the unit of measurement associated with the parameter (@unit property in NED).
+
+Further cPar methods and related classes like cExpression and cDynamicExpression are used by the NED infrastructure to set up and assign parameters. They are documented in the API Reference, but they are normally of little interest to users.
+
+
+simtime_t startTime, endTime;
+if (pkt->isReceptionStart())
+{
+    // gate was reprogrammed with setDeliverOnReceptionStart(true)
+    startTime = pkt->getArrivalTime(); // or: simTime();
+    endTime = startTime + pkt->getDuration();
+}
+else
+{
+    // default case
+    endTime = pkt->getArrivalTime(); // or: simTime();
+    startTime = endTime - pkt->getDuration();
+}
+ev << "interval: " << startTime << ".." << endTime << "\n";
+
+simtime_t timeout = 3.0;
+cMessage *msg = receive(timeout);
+if (msg==NULL)
+{
+    ...   // handle timeout
+}
+else
+{
+    ...  // process message
+}
+endSimulation();
+
+
+cModule *calleeModule = getParentModule()->getSubmodule("callee");
+Callee *callee = check_and_cast<Callee *>(calleeModule);
+callee->doSomething();
+
+
+cMessage Class: 
+  long getId() const;
+  long getTreeId() const;
+  simtime_t getSendingTime() const;
+  simtime_t getArrivalTime() const;
+
+
+
