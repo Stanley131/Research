@@ -19,3 +19,9 @@
   - Homatransport.cc
     - add megId parameter for setVar funtion at line 1372, 1385, (2428, 2444), last two lines (I used 0, since this paramameter is never used.)
     
+  - Able to compile 
+ 
+### Print out all PBS required elements 
+  - set time limit to 100ms in homaTransportConfig.ini to save time  
+  - Message Size and rececived size are verified based on output 
+  - 
