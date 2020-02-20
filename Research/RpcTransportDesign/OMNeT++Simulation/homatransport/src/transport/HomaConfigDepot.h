@@ -141,6 +141,10 @@ class HomaConfigDepot {
     // workloadType.
     const char* workloadType;
 
+    //research
+    float r_alpha;
+    std::string r_mode;
+
   PRIVATE:
     // Enum-ed corresponding value for SenderScheme param. Provided for doing
     // faster runtime checks based on SenderScheme values.

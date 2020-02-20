@@ -572,16 +572,20 @@ class HomaTransport : public cSimpleModule
 
                 // Index of s in the senders list
                 int sInd;
+                
+		// Message ID 
+                uint64_t msgId;
 
               PUBLIC:
                 void setVar(uint16_t numToGrant, uint32_t headIdx,
-                    uint32_t numSenders, SenderState* s, int sInd)
+                    uint32_t numSenders, SenderState* s, int sInd, uint64_t msgId)
                 {
                     this->numToGrant = numToGrant;
                     this->headIdx = headIdx;
                     this->numSenders = numSenders;
                     this->s = s;
                     this->sInd = sInd;
+		    this->msgId= msgId;
                 }
 
                 friend std::ostream& operator<< (std::ostream& os,

@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2016 Stanford University
+/* Copyright (c) 2015-2016 Sctanford University
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,7 +15,8 @@
 
 #include <sstream>
 #include "HomaConfigDepot.h"
-
+#include <iomanip>
+#include <limits>
 
 HomaConfigDepot::HomaConfigDepot(cComponent* ownerTransport)
     : ownerTransport(ownerTransport)
@@ -58,6 +59,12 @@ HomaConfigDepot::HomaConfigDepot(cComponent* ownerTransport)
     xmlConfig = ownerTransport->par("transportConfig").xmlValue();
     workloadType = ownerTransport->par("workloadType").stringValue();
     linkCheckBytes = (uint32_t)ownerTransport->par("linkCheckBytes");
+   
+    /* research */ 
+    std::ostringstream out;
+    out << std::setprecision(2) << std::stof(ownerTransport->homa_getAlpha());
+    r_alpha = std::stof(out.str());
+    r_mode = ownerTransport->homa_getMode();
     paramToEnum();
 
     // read in explicitUnschedPrioCutoff
