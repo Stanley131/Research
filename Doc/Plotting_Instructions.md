@@ -6,4 +6,4 @@
      - create a fileList.txt for plotting  
   3. Create a diretory for each transport type and move its file into the correspondin directory 
         
-  4. Rscript PBS_Transport.r 
+  4.  Rscript PBS_Transport.r stretchVsTransport.txt
