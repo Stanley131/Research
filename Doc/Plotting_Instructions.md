@@ -11,11 +11,4 @@
     - ../homatransport -u Cmdenv --output-vector-file="WorkloadHadoop-15-homa-2.vec" --output-scalar-file="WorkloadHadoop-15-homa-2.sca" -c WorkloadHadoop  --r_alpha=2 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig_homa_rlf.ini 
   
   
-  
-  1. Use this plotType that has transport type 
-     - StretchVsTransport
-  2. Use resultDir + '/fileList.txt' 
-     - create a fileList.txt for plotting  
-  3. Create a diretory for each transport type and move its file into the correspondin directory 
-        
-  4.  Rscript PBS_Transport.r stretchVsTransport.txt
+ 
