@@ -2457,131 +2457,138 @@ HomaTransport::ReceiveScheduler::SchedSenders::handleBwUtilTimerEvent(
 }
 
 uint16_t
-HomaTransport::ReceiveScheduler::SchedSenders::getGrantPrioFromRawPrio(std::string mode, float rawPrio){
+HomaTransport::ReceiveScheduler::SchedSenders::getGrantPrioFromRawPrio(std::string mode, double rawPrio){
+    uint16_t m_nonBlind = (mode == "blind") ? 0: 1;
+    std::vector<double> limits = getPrioLimits(m_nonBlind);
 
+    /*
+    for(int i = 0; i < 8; i++){
+       std::cout << limits[i] << " "; 
     
+    }
+    std::cout<<"\n"; 
+    */
+
+    int i = 7; 
+    while (i >=0 && rawPrio < limits[i]){
+        i--;
+    }
+    return (i==-1) ? 0: i;   
 }	
 
 
 std::vector<double> 
-HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(){
+HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(uint16_t m_nonBlind){
 	// copy all the limits
 	// compute grant prio by checking which bin the rawPrio falls in
 	// return grantPrio
 	std::vector<double> limits;
-    
-    // Note: set m_profile = 1 for primary testing 
-    int m_pfofile = 1; 
+	int m_profile = 1; 
+	std::string workloadType = homaConfig->workloadType;
+	
+	if ( workloadType == "FacebookKeyValue_Sampled"){
+		m_profile = 1;
+	}else if ( workloadType == "Google_SearchRPC"){
+		m_profile = 2;
+	}else if ( workloadType == "Google_AllRPC"){
+		m_profile = 3;
+	}else if ( workloadType == "Facebook_HadoopDist_All"){
+		m_profile = 4;
+	}else if ( workloadType == "DCTCP_MsgSizeDist"){
+		m_profile = 5;
+	}else{
+		std::cout << m_profile << std::endl;
+		std::cout << "invalid profile specified." << "\n";
 
+	}
+	
+	std::cout << "[workload type] " << workloadType << " [m_profile] " << m_profile << endl;
 
-    // Note: Do not "overfit" the bucket boundaries, else varying alpha is hard to demonstrate
-		switch (m_profile) {
-			case 1: // W1 (alpha = 10)
-				if (m_nonBlind) {
-					limits = {1.64e-08, 3.15e-19, 6.08e-30, 1.17e-40, 2.26e-51, 4.37e-62, 8.42e-72, 1.62e-83}; // generalized
-					//limits = {5.10708e-41, 3.12373e-41, 2.67044e-41, 2.19076e-41, 1.87042e-41, 1.59852e-41, 1.37976e-41, 1.18287e-41}; // overfitted
-					//limits = {3.456e-39, 2.574e-41, 1.957e-41, 1.541e-41, 1.224e-41, 1.56267e-44, 1.56257e-44, 1.56255e-44};
-				} else {
-					limits = {2.5e-19, 1e-21, 4.4e-24, 1.9e-26, 7.8e-29, 3.3e-31, 1.4e-33, 5.8e-36};
-				}
-				break;
-			case 2: // W2 (alpha = 10)
-				if (m_nonBlind) {
-					limits = {3.7e-07, 4.8e-18, 6.3e-29, 8.24e-40, 1.07e-50, 1.41e-61, 1.84e-72, 3.13e-94}; // generalized
-					//limits = {1.87761e-39, 2.22075e-40, 6.0904e-41, 2.93441e-41, 2.17523e-41, 1.5628e-44, 1.5627e-44, 1.56258e-44}; // overfitted
-					//limits = {3.96e-40, 9.21e-41, 3.61e-41, 2.63e-41, 1.89e-41, 1.5628e-44, 1.56269e-44, 1.56258e-44};
-				} else {
-					limits = {6.1e-20, 1.5e-23, 3.6e-27, 8.7e-31, 2.1e-34, 5.1e-38, 1.2e-41, 2.9e-45};
-				}
-				break;
-			case 3: // W3 (alpha = 10)
-				if (m_nonBlind) {
-					limits = {4.08e-06, 3.95e-17, 3.82e-28, 3.69e-39, 3.58e-50, 3.45e-61, 3.34e-72, 3.24e-82}; // generalized
-					//limits = {7.46415e-36, 2.4216e-38, 5.70689e-39, 2.40171e-39, 1.00258e-39, 4.90344e-40, 1.85818e-40, 4.10319e-41}; // overfitted
-					//limits = {4.1604e-37, 2.75841e-38, 7.28671e-39, 3.57929e-39, 1.72651e-39, 6.96279e-40, 2.26281e-40, 2.82834e-41};
-					//limits = {3.6527e-38, 1.1489e-38, 5.433e-39, 2.8375e-39, 1.316e-39, 4.943e-40, 1.4986e-40};
-				} else {
-					limits = {5.8e-21, 7.3e-26, 9e-31, 1.1e-35, 1.3e-40, 1.6e-45, 2e-50, 2.5e-55};
-				}
-				break;
-			case 4: // W4 (alpha = 10)
-				if (m_nonBlind) {
-					//limits = {1.75064e-35, 3.27967e-37, 1.03718e-37, 4.73471e-38, 2.3662e-38, 1.16651e-38, 5.71894e-39, 1.90036e-39}; // overfitted
-					//limits = {1.42897e-41, 3.32968e-49, 1.58941e-54, 4.02692e-58, 4.00434e-62, 4.20953e-67, 1.11941e-67, 1.86391e-68};
-					limits = {1.62e-05, 1.32e-16, 1.07e-27, 8.76e-39, 7.13e-50, 5.8e-61, 4.72e-72, 3.84e-83}; // generalized
-				} else {
-					limits = {2.6e-21, 1.2e-26, 5.3e-32, 2.4e-37, 1.1e-42, 4.9e-48, 2.2e-53, 1e-58};
-				}
-				break;
-			case 5: // W5 (alpha = 10)
-				if (m_nonBlind) {
-					//limits = {4.28436e-29, 4.7178e-36, 9.17517e-37, 2.76119e-37, 1.10387e-37, 5.29671e-38, 2.4704e-38, 9.65756e-39}; // overfitted
-					//limits = {1.33137e-48, 3.86956e-55, 1.43643e-59, 3.79086e-63, 3.35128e-65, 1.13623e-66, 3.13629e-67, 8.19613e-68};
-					limits = {4.71e-05, 3.94e-16, 3.3e-27, 2.76e-38, 2.31e-49, 1.94e-60, 1.62e-71, 1.36e-82}; // generalized
-				} else {
-					limits = {1.2e-21, 2.7e-27, 6e-33, 1.3e-38, 3e-44, 6.5e-50, 1.4e-55, 3.2e-61};
-				}
-				break;
-			case 6: // Incast
-				if (m_nonBlind) {
-					limits = {7.0772E-65, 1.2458E-65, 2.1929E-66, 3.8601E-67, 6.7949E-68, 1.1961E-68, 2.1054E-69, 3.7061E-70};
-				} else {
-					//limits = {2.6e-21, 1.2e-26, 5.3e-32, 2.4e-37, 1.1e-42, 4.9e-48, 2.2e-53, 1e-58};
-					limits = {3.6073E-20, 5.2077E-24, 7.5181E-28, 1.0854E-31, 1.5669E-35, 2.2620E-39, 3.2656E-43, 4.7144E-47};
-				}
-				break;
-			case 7: // background flows
-				limits = {1.2e-21, 2.7e-27, 6e-33, 1.3e-38, 3e-44, 6.5e-50, 1.4e-55, 3.2e-61};
-				break;
-			
-            default:
-				std::cout << m_profile << std::endl;
-				NS_FATAL_ERROR("invalid profile specified.");
-		}
-        /*
-		for (int i=0; i<8; i++) {
-			m_prioLimits[i] = limits[i];
-		}*/
-        return limits; 
+	// Note: Do not "overfit" the bucket boundaries, else varying alpha is hard to demonstrate
+	switch (m_profile) {
+		case 1: // W1 (alpha = 10)
+			if (m_nonBlind) { 
+				limits = {1.64e-08, 3.15e-19, 6.08e-30, 1.17e-40, 2.26e-51, 4.37e-62, 8.42e-72}; // generalized 1.62e-83 (the last one removed)
+				//limits = {5.10708e-41, 3.12373e-41, 2.67044e-41, 2.19076e-41, 1.87042e-41, 1.59852e-41, 1.37976e-41, 1.18287e-41}; // overfitted
+				//limits = {3.456e-39, 2.574e-41, 1.957e-41, 1.541e-41, 1.224e-41, 1.56267e-44, 1.56257e-44, 1.56255e-44};
+			} else {
+				limits = {2.5e-19, 1e-21, 4.4e-24, 1.9e-26, 7.8e-29, 3.3e-31, 1.4e-33 }; //5.8e-36
+			}
+			break;
+		case 2: // W2 (alpha = 10)
+			if (m_nonBlind) {
+				limits = {3.7e-07, 4.8e-18, 6.3e-29, 8.24e-40, 1.07e-50, 1.41e-61, 1.84e-72}; // generalized  3.13e-94
+				//limits = {1.87761e-39, 2.22075e-40, 6.0904e-41, 2.93441e-41, 2.17523e-41, 1.5628e-44, 1.5627e-44, 1.56258e-44}; // overfitted
+				//limits = {3.96e-40, 9.21e-41, 3.61e-41, 2.63e-41, 1.89e-41, 1.5628e-44, 1.56269e-44, 1.56258e-44};
+			} else {
+				limits = {6.1e-20, 1.5e-23, 3.6e-27, 8.7e-31, 2.1e-34, 5.1e-38, 1.2e-41}; //2.9e-45
+			}
+			break;
+		case 3: // W3 (alpha = 10)
+			if (m_nonBlind) {
+				limits = {4.08e-06, 3.95e-17, 3.82e-28, 3.69e-39, 3.58e-50, 3.45e-61, 3.34e-72, 3.24e-82}; // generalized
+				//limits = {7.46415e-36, 2.4216e-38, 5.70689e-39, 2.40171e-39, 1.00258e-39, 4.90344e-40, 1.85818e-40, 4.10319e-41}; // overfitted
+				//limits = {4.1604e-37, 2.75841e-38, 7.28671e-39, 3.57929e-39, 1.72651e-39, 6.96279e-40, 2.26281e-40, 2.82834e-41};
+				//limits = {3.6527e-38, 1.1489e-38, 5.433e-39, 2.8375e-39, 1.316e-39, 4.943e-40, 1.4986e-40};
+			} else {
+				limits = {5.8e-21, 7.3e-26, 9e-31, 1.1e-35, 1.3e-40, 1.6e-45, 2e-50, 2.5e-55};
+			}
+			break;
+		case 4: // W4 (alpha = 10)
+			if (m_nonBlind) {
+				//limits = {1.75064e-35, 3.27967e-37, 1.03718e-37, 4.73471e-38, 2.3662e-38, 1.16651e-38, 5.71894e-39, 1.90036e-39}; // overfitted
+				//limits = {1.42897e-41, 3.32968e-49, 1.58941e-54, 4.02692e-58, 4.00434e-62, 4.20953e-67, 1.11941e-67, 1.86391e-68};
+				limits = {1.62e-05, 1.32e-16, 1.07e-27, 8.76e-39, 7.13e-50, 5.8e-61, 4.72e-72}; // generalized  3.84e-83
+			} else {
+				limits = {2.6e-21, 1.2e-26, 5.3e-32, 2.4e-37, 1.1e-42, 4.9e-48, 2.2e-53};//1e-58}
+			}
+			break;
+		case 5: // W5 (alpha = 10)
+			if (m_nonBlind) {
+				//limits = {4.28436e-29, 4.7178e-36, 9.17517e-37, 2.76119e-37, 1.10387e-37, 5.29671e-38, 2.4704e-38, 9.65756e-39}; // overfitted
+				//limits = {1.33137e-48, 3.86956e-55, 1.43643e-59, 3.79086e-63, 3.35128e-65, 1.13623e-66, 3.13629e-67, 8.19613e-68};
+				limits = {4.71e-05, 3.94e-16, 3.3e-27, 2.76e-38, 2.31e-49, 1.94e-60, 1.62e-71}; // generalized 1.36e-82
+			} else {
+				limits = {1.2e-21, 2.7e-27, 6e-33, 1.3e-38, 3e-44, 6.5e-50, 1.4e-55}; // 3.2e-61
+			}
+			break;		
+		default:
+			std::cout << m_profile << std::endl;
+			std::cout << "invalid profile specified." << "\n";
+	}
+	/*
+	for (int i=0; i<8; i++) {
+		m_prioLimits[i] = limits[i];
+	}*/
+	
+	//return limits; 
+	int l_size = static_cast<int>(limits.size());
+	for(int i=0; i < l_size; i++){
+   		limits[i] = log10(limits[i]);
+	}
+	
+	//for(std::vector<double>::iterator it = limits.begin(); it != limits.end(); ++it) {
+    		//it = log10(it);
+	//}
+	return limits;
 }
 
 uint16_t
 HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 {
-    std::cout << "[Experiment alpha] " << homaConfig->r_alpha << "\n";
-    std::cout << "[Experiment mode] " << homaConfig->r_mode << "\n";
-     
-    if (homaConfig->r_mode == "homa") {    
-    	int grantPrio =
-        	st.sInd + homaConfig->allPrio - homaConfig->adaptiveSchedPrioLevels;
-    	grantPrio = std::min(homaConfig->allPrio - 1, grantPrio);
-    	EV << "Get prio for mesg. sInd: " << st.sInd << ", grantPrio: " <<
-        	grantPrio << ", allPrio: " << homaConfig->allPrio << ", schedPrios: " <<
-        	homaConfig->adaptiveSchedPrioLevels << endl;
-	    
-        return grantPrio; 
-    } else if (homaConfig->r_mode == "blind") {
-    	// age of flow should be in nanoseconds
-	    // use alpha = 2 for the first run
-        uint32_t r_bytesSent = mesg -> msgSize - mesg -> bytesToReceive;
-        simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
-	    float rawPrio = r_ageOfFlow / pow(r_bytesSent, homaConfig->r_alpha); 
-	    return getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
-    } else if (homaConfig->r_mode == "aware") {
-        uint32_t r_bytesRemaining = mesg -> bytesToReceive;
-        simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
-	    float rawPrio = r_ageOfFlow / pow(r_bytesRemaining, homaConfig->r_alpha); 
-	    return getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
-    }
-    InboundMessage* mesg = st.s -> incompleteMesgs[st.msgId]; 
+    // std::cout << "[Experiment alpha] " << homaConfig->r_alpha << "\n";
+    // std::cout << "[Experiment mode] " << homaConfig->r_mode << "\n";
 
-    //Print out al PBS required elements
+    int grantPrio;    
+    InboundMessage* mesg = st.s -> incompleteMesgs[st.msgId]; 
     
+    /*
+    //Print out all PBS required elements 
     if(mesg != NULL){ 
 	    std::cout<<"msgId: "<< st.msgId<<" Message Size: "<<mesg-> msgSize <<
 		 " message Left: "<<mesg -> bytesToReceive <<"\n"; 
 	    	    
-	    std::cout <<"msgIdAtSneder: "<< mesg -> msgIdAtSender <<"\n"; 
+	    std::cout <<"msgIdAtSender: "<< mesg -> msgIdAtSender <<"\n"; 
 	    std::cout <<"Message bytes remaining: "<< mesg -> bytesToReceive <<"\n";
 	    std::cout << "Message bytes sent: " << mesg -> msgSize - mesg -> bytesToReceive << "\n";  	
 	    std::cout <<"Message Size: "<< mesg -> msgSize <<"\n"; 
@@ -2596,8 +2603,42 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 	    std::cout <<"receiver Address: " << mesg -> destAddr.str() <<"\n"; 
 	    
     }
+    */
+    if (mesg == NULL || homaConfig->r_mode == "homa") {    
+    	grantPrio =
+        	st.sInd + homaConfig->allPrio - homaConfig->adaptiveSchedPrioLevels;
+    	grantPrio = std::min(homaConfig->allPrio - 1, grantPrio);
+    	EV << "Get prio for mesg. sInd: " << st.sInd << ", grantPrio: " <<
+        	grantPrio << ", allPrio: " << homaConfig->allPrio << ", schedPrios: " <<
+        	homaConfig->adaptiveSchedPrioLevels << endl;
+	    
+        return grantPrio; 
+    } else if (homaConfig->r_mode == "blind") {
+    	// age of flow should be in nanoseconds
+	// use alpha = 2 for the first run
+        uint32_t r_bytesSent = mesg -> msgSize - mesg -> bytesToReceive;	
+        //simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
+        simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.000001);
+	//std::cout<<"r_ageOfFlow: "<<r_ageOfFlow<<"\n"; 
+	
+	//float rawPrio = r_ageOfFlow.dbl() / pow(r_bytesSent, homaConfig->r_alpha); 
+	double rawPrio = log10(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log10(r_bytesSent));
+	//std::cout<<"rawPrio: "<<rawPrio<<"\n"; 
+	
+        grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio); 
+	//std::cout << "grantPrio: "<< grantPrio<<"\n"; 
+	return grantPrio;
 
-    return grantPrio;
+    } else if (homaConfig->r_mode == "aware") {
+        uint32_t r_bytesRemaining = mesg -> bytesToReceive;
+        simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
+	double rawPrio = log10(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log10(r_bytesRemaining));
+	grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
+	return grantPrio;
+    }
+
+
+
 }
 
 /**

@@ -54,8 +54,8 @@ tailStretchVsSize <- ddply(tailStretchVsSize,
 tailStretchVsSize$MsgSizeRange <- as.numeric(
     as.character(tailStretchVsSize$MsgSizeRange))
 
-textSize <- 55
-titleSize <- 55
+textSize <- 15
+titleSize <- 20
 yLimit <- 15
 workloads <- c(
     levels(avgStretchVsSize$WorkLoad)[3], levels(avgStretchVsSize$WorkLoad)[5],

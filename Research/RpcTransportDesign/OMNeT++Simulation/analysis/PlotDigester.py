@@ -422,14 +422,14 @@ if __name__ == '__main__':
         sys.exit(prepE2EStretchVsSizeAndUnsched(resultDir))
     elif plotType == 'StretchVsUnsched':
         prepE2EStretchVsSizeAndUnsched(resultDir)
-	print "here"
         plotPath = os.environ['HOME'] + "/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/"
-        print subprocess.Popen('cd {0}; Rscript PlotStretchVsUnsched.r'.format(plotPath),
+        print(plotPath)
+	print subprocess.Popen('cd {0}; Rscript PlotStretchVsUnsched.r'.format(plotPath),
             shell=True, stdout=subprocess.PIPE).stdout.read()
     elif plotType == 'StretchVsSize':
         prepE2EStretchVsSizeAndUnsched(resultDir)
         plotPath = os.environ['HOME'] + "/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/"
-        print subprocess.Popen('cd {0}; Rscript PlotStretchVsSize.r'.format(plotPath),
+	print subprocess.Popen('cd {0}; Rscript PlotStretchVsSize.r'.format(plotPath),
             shell=True, stdout=subprocess.PIPE).stdout.read()
     elif plotType == 'StretchVsTransport':
         f = open(resultDir + '/fileList.txt')

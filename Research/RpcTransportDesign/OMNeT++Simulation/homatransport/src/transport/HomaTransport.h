@@ -606,7 +606,12 @@ class HomaTransport : public cSimpleModule
 
             //void handleGrantRequest(SenderState* s, int sInd, int headInd);
             uint16_t getPrioForMesg(SchedState& cur);
-            void handleBwUtilTimerEvent(cMessage* timer);
+
+	    //research
+	    std::vector<double> getPrioLimits(uint16_t m_nonBlind);
+            uint16_t getGrantPrioFromRawPrio(std::string mode, double rawPrio);
+	    
+	    void handleBwUtilTimerEvent(cMessage* timer);
             void handlePktArrivalEvent(SchedState& old, SchedState& cur);
             void handleGrantSentEvent(SchedState& old, SchedState& cur);
             void handleMesgRecvCompletionEvent(
