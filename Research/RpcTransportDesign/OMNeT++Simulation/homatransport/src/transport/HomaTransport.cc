@@ -2486,23 +2486,23 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(uint16_t m_nonBlind
 	int m_profile = 1; 
 	std::string workloadType = homaConfig->workloadType;
 	
-	if ( workloadType == "FacebookKeyValue_Sampled"){
+	if ( workloadType == "FACEBOOK_KEY_VALUE"){
 		m_profile = 1;
-	}else if ( workloadType == "Google_SearchRPC"){
+	}else if ( workloadType == "GOOGLE_SEARCH_RPC"){
 		m_profile = 2;
-	}else if ( workloadType == "Google_AllRPC"){
+	}else if ( workloadType == "GOOGLE_ALL_RPC"){
 		m_profile = 3;
-	}else if ( workloadType == "Facebook_HadoopDist_All"){
+	}else if ( workloadType == "FACEBOOK_HADOOP_ALL"){
 		m_profile = 4;
-	}else if ( workloadType == "DCTCP_MsgSizeDist"){
+	}else if ( workloadType == "DCTCP"){
 		m_profile = 5;
 	}else{
-		std::cout << m_profile << std::endl;
-		std::cout << "invalid profile specified." << "\n";
+		//std::cout << m_profile << std::endl;
+		//std::cout << "invalid profile specified." << "\n";
 
 	}
 	
-	std::cout << "[workload type] " << workloadType << " [m_profile] " << m_profile << endl;
+	//std::cout << "[workload type] " << workloadType << " [m_profile] " << m_profile << endl;
 
 	// Note: Do not "overfit" the bucket boundaries, else varying alpha is hard to demonstrate
 	switch (m_profile) {
@@ -2637,6 +2637,7 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 	return grantPrio;
     }
 
+    return 7;
 
 
 }

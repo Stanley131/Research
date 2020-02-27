@@ -5,7 +5,7 @@ if [ ! $# -eq 0 ]; then
 	config_file="$1"
 	source "$config_file"
 else
-	echo "usage: ./run_pipeline <config-file>.conf";
+	echo "usage: ./run_workload.sh <config-file>.conf";
 	exit 1;
 fi
 
@@ -61,11 +61,11 @@ do
 		args+=" --r_alpha=$A"
 		args+=" --r_mode=aware"
 		args+=" -r 15"
-		args+=" --output-vector-file=\"$(W)-15-aware-$(A).vec\""
-		args+=" --output-scalar-file=\"$(W)-15-aware-$(A).sca\"" 
-		args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig_pbs.ini"
+		args+=" --output-vector-file=$W-15-aware-$A.vec"
+		args+=" --output-scalar-file=$W-15-aware-$A.sca" 
+		args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET transportConfig.ini"
 		echo "Running Sim with args: $args"
-		../homatransport "$args" & sim_pids+=("$!")
+		../homatransport $args & sim_pids+=("$!")
 	done
 done
 
@@ -83,11 +83,11 @@ do
         args+=" --r_alpha=0"
         args+=" --r_mode=homa"
         args+=" -r 15"
-	args+=" --output-vector-file=\"$(W)-15-homa-$(A).vec\""
-        args+=" --output-scalar-file=\"$(W)-15-homa-$(A).sca\""
-        args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig_pbs.ini"
+	args+=" --output-vector-file=$W-15-homa-$A.vec"
+        args+=" --output-scalar-file=$W-15-homa-$A.sca"
+        args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET transportConfig.ini"
         echo "Running Sim with args: $args"
-        ../homatransport "$args" & sim_pids+=("$!")
+        ../homatransport $args & sim_pids+=("$!")
 done
 
 # Simulations With pbs blind
@@ -106,11 +106,11 @@ do
                 args+=" --r_alpha=$A"
                 args+=" --r_mode=blind"
                 args+=" -r 15"
-                args+=" --output-vector-file=\"$(W)-15-blind-$(A).vec\""
-                args+=" --output-scalar-file=\"$(W)-15-blind-$(A).sca\"" 
-		args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig_run.ini"
+                args+=" --output-vector-file=$W-15-blind-$A.vec"
+                args+=" --output-scalar-file=$W-15-blind-$A.sca" 
+		args+=" -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET transportConfig.ini"
                 echo "Running Sim with args: $args"
-                ../homatransport "$args" & sim_pids+=("$!")
+                ../homatransport $args & sim_pids+=("$!")
         done
 done
 

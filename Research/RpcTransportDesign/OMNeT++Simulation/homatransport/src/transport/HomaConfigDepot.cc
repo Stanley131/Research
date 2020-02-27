@@ -64,7 +64,7 @@ HomaConfigDepot::HomaConfigDepot(cComponent* ownerTransport)
    
     /* research */ 
     std::ostringstream out;
-    out << std::setprecision(2) << std::stof(ownerTransport->homa_getAlpha());
+    out << std::setprecision(6) << std::stof(ownerTransport->homa_getAlpha());
     r_alpha = std::stof(out.str());
     r_mode = ownerTransport->homa_getMode();
     paramToEnum();
