@@ -5,7 +5,7 @@
 
   2. Create the stretchvstransport.txt file as follows:
   
-     - python PlotDigester.py --plotType StretchVsUnsched --resultDir /users/mkunal/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src/dcntopo/results/homa/rlf
+     - python PlotDigester.py --plotType StretchVsTransport --resultDir /users/mkunal/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src/dcntopo/results/homa/rlf
   3. Generate graphs with PBS_Transport.r: 
      - example: Rscript PBS_Transport.r stretchVsUnsched.txt  
      - graphs will be in Plots directoy 
