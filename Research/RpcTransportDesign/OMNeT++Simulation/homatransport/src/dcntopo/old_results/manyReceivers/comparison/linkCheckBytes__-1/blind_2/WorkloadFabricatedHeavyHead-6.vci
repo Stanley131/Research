@@ -1,0 +1,58 @@
+file 30684 1582699544                                           
+version 2
+run WorkloadFabricatedHeavyHead-6-20200225-21:26:27-7616
+attr RTT 0x2710
+attr accountForGrantTraffic true
+attr adaptiveSchedPrioLevels 2
+attr boostTailBytesPrio 0x2710
+attr cbfCapMsgSize 0x2710
+attr configname WorkloadFabricatedHeavyHead
+attr datetime 20200225-21:26:27
+attr defaultReqBytes 1442
+attr defaultUnschedBytes 7886
+attr edgeLinkDelay 0.0us
+attr experiment WorkloadFabricatedHeavyHead
+attr fabricLinkDelay 0.0us
+attr fabricLinkSpeed 40Gbps
+attr hostNicSxThinkTime 0.5us
+attr hostSwTurnAroundTime 0.5us
+attr inifile homaTransportConfig_pbs.ini
+attr interArrivalDist exponential
+attr isFabricCutThrough false
+attr isRoundRobinScheduler false
+attr iterationvars "$workloadType=FABRICATED_HEAVY_HEAD, $msgSizeRanges=51 52 53 54 55 57 58 59 61 62 63 65 67 68 70 72 74 77 79 81 84 87 90 93 97 100 104 109 113 119 124 131 138 145 154 164 175 187 202 219 239 263 293 330 378 443 534 673 909 1400 1450 1476 1532 1592 1656 1691 1764 1844 1932 1979 2080 2192 2316 2384 2533 2701 2893 2999 3238 3518 3850 4042 4487 5043 5757 6195 6705 7307 8028 8906 10355 11364 12590 13780 15625 17500 20588 25000 30172 40698 62500 400000, $loadFactor=0.4*0.883, $interArrivalDist=exponential, $startTime=0s, $stopTime=3s, $seedInd=6, $prioLevels=8, $adaptiveSchedPrioLevels=2, $numSendersToKeepGranted=2, $prioResolverPrioLevels=8-2, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.4"
+attr iterationvars2 "$workloadType=FABRICATED_HEAVY_HEAD, $msgSizeRanges=51 52 53 54 55 57 58 59 61 62 63 65 67 68 70 72 74 77 79 81 84 87 90 93 97 100 104 109 113 119 124 131 138 145 154 164 175 187 202 219 239 263 293 330 378 443 534 673 909 1400 1450 1476 1532 1592 1656 1691 1764 1844 1932 1979 2080 2192 2316 2384 2533 2701 2893 2999 3238 3518 3850 4042 4487 5043 5757 6195 6705 7307 8028 8906 10355 11364 12590 13780 15625 17500 20588 25000 30172 40698 62500 400000, $loadFactor=0.4*0.883, $interArrivalDist=exponential, $startTime=0s, $stopTime=3s, $seedInd=6, $prioLevels=8, $adaptiveSchedPrioLevels=2, $numSendersToKeepGranted=2, $prioResolverPrioLevels=8-2, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.4, $repetition=0"
+attr linkCheckBytes -1
+attr loadFactor 0.4*0.883
+attr maxOutstandingRecvBytes 0x2710
+attr measurement "$workloadType=FABRICATED_HEAVY_HEAD, $msgSizeRanges=51 52 53 54 55 57 58 59 61 62 63 65 67 68 70 72 74 77 79 81 84 87 90 93 97 100 104 109 113 119 124 131 138 145 154 164 175 187 202 219 239 263 293 330 378 443 534 673 909 1400 1450 1476 1532 1592 1656 1691 1764 1844 1932 1979 2080 2192 2316 2384 2533 2701 2893 2999 3238 3518 3850 4042 4487 5043 5757 6195 6705 7307 8028 8906 10355 11364 12590 13780 15625 17500 20588 25000 30172 40698 62500 400000, $loadFactor=0.4*0.883, $interArrivalDist=exponential, $startTime=0s, $stopTime=3s, $seedInd=6, $prioLevels=8, $adaptiveSchedPrioLevels=2, $numSendersToKeepGranted=2, $prioResolverPrioLevels=8-2, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.4"
+attr msgSizeRanges "51 52 53 54 55 57 58 59 61 62 63 65 67 68 70 72 74 77 79 81 84 87 90 93 97 100 104 109 113 119 124 131 138 145 154 164 175 187 202 219 239 263 293 330 378 443 534 673 909 1400 1450 1476 1532 1592 1656 1691 1764 1844 1932 1979 2080 2192 2316 2384 2533 2701 2893 2999 3238 3518 3850 4042 4487 5043 5757 6195 6705 7307 8028 8906 10355 11364 12590 13780 15625 17500 20588 25000 30172 40698 62500 400000"
+attr network DcnTopo
+attr nicLinkSpeed 10Gbps
+attr numSendersToKeepGranted 2
+attr numServersPerTor 16
+attr numTors 9
+attr prioLevels 8
+attr prioResolverPrioLevels 8-2
+attr processid 7616
+attr repetition 0
+attr replication #0
+attr resultdir results/manyReceivers/comparison/linkCheckBytes__${linkCheckBytes}
+attr rlf 0.4
+attr runnumber 6
+attr seedInd 6
+attr seedset 0
+attr senderScheme SRBF
+attr startTime 0s
+attr stopTime 3s
+attr switchFixDelay 0.25us
+attr transportSchemeType HomaTransport
+attr unschedPrioResolutionMode STATIC_CBF_GRADUATED
+attr unschedPrioUsageWeight 1
+attr useUnschRateInScheduler false
+attr workloadType FABRICATED_HEAVY_HEAD
+
+vector 1368  DcnTopo.globalListener  "backlogged transmit messages"  ETV
+vector 1369  DcnTopo.globalListener  "Time division of num active sched senders"  ETV
+1368	5893 24683 5336804 5321485000 0 0.999 1000 2 102 69436 4913974
+1369	30576 108 5321485001 5321485001 0.923676680927726 0.999460202455476 3 0 2 3 5

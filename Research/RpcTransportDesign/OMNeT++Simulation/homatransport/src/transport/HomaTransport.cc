@@ -1776,6 +1776,15 @@ HomaTransport::ReceiveScheduler::SenderState::handleInboundPkt(HomaPkt* rxPkt)
 #endif
 
         // remove this message from the incompleteRxMsgs
+	// research 
+	// 1. get the age_of_flow 
+	// 2. write the flow size (bytes) and flow completion time (sec) to file
+	// 3. close the file somewhere else 
+	simtime_t r_ageOfFlow = (simTime() - incompleteMesgs -> reqArrivalTime) * (0.000000000000001);
+        uint32_t incompleteMesgs -> msgSize;
+
+	
+
         incompleteMesgs.erase(inboundMesg->msgIdAtSender);
         delete inboundMesg;
         ret.second = -1;

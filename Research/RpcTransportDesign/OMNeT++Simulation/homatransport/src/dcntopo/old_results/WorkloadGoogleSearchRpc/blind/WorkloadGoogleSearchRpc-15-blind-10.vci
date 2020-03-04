@@ -1,0 +1,58 @@
+file 6454 1582780349                                            
+version 2
+run WorkloadGoogleSearchRpc-15-20200226-21:53:15-22875
+attr RTT 0x2710
+attr accountForGrantTraffic true
+attr adaptiveSchedPrioLevels 3
+attr boostTailBytesPrio 0x2710
+attr cbfCapMsgSize 0x2710
+attr configname WorkloadGoogleSearchRpc
+attr datetime 20200226-21:53:15
+attr defaultReqBytes 1442
+attr defaultUnschedBytes 7886
+attr edgeLinkDelay 0.0us
+attr experiment WorkloadGoogleSearchRpc
+attr fabricLinkDelay 0.0us
+attr fabricLinkSpeed 40Gbps
+attr hostNicSxThinkTime 0.5us
+attr hostSwTurnAroundTime 0.5us
+attr inifile transportConfig.ini
+attr interArrivalDist exponential
+attr isFabricCutThrough false
+attr isRoundRobinScheduler false
+attr iterationvars "$workloadType=GOOGLE_SEARCH_RPC, $msgSizeRanges=2 3 4 8 32 34 36 38 40 43 46 49 53 58 64 67 71 75 80 85 91 98 107 116 128 135 142 151 160 171 183 197 213 233 256 269 284 301 320 341 366 394 427 465 512 539 569 602 640 683 731 788 853 931 1024 1078 1365 2048 3151 4096 5120 6302 7447 8192 9102 10240 11703 12603 13653 14895 16384 17246 18204 19275 20480 25206 29789 34493 40960 46811 50412 54613 59578 65536 72818 81920 93623 100825 119156 137971 163840 187246 201649 262144 308405 403298 524288 1071908 3529904, $loadFactor=0.8*0.796, $interArrivalDist=exponential, $startTime=0s, $stopTime=3.0s, $seedInd=15, $prioLevels=8, $adaptiveSchedPrioLevels=3, $numSendersToKeepGranted=3, $prioResolverPrioLevels=8-3, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.8"
+attr iterationvars2 "$workloadType=GOOGLE_SEARCH_RPC, $msgSizeRanges=2 3 4 8 32 34 36 38 40 43 46 49 53 58 64 67 71 75 80 85 91 98 107 116 128 135 142 151 160 171 183 197 213 233 256 269 284 301 320 341 366 394 427 465 512 539 569 602 640 683 731 788 853 931 1024 1078 1365 2048 3151 4096 5120 6302 7447 8192 9102 10240 11703 12603 13653 14895 16384 17246 18204 19275 20480 25206 29789 34493 40960 46811 50412 54613 59578 65536 72818 81920 93623 100825 119156 137971 163840 187246 201649 262144 308405 403298 524288 1071908 3529904, $loadFactor=0.8*0.796, $interArrivalDist=exponential, $startTime=0s, $stopTime=3.0s, $seedInd=15, $prioLevels=8, $adaptiveSchedPrioLevels=3, $numSendersToKeepGranted=3, $prioResolverPrioLevels=8-3, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.8, $repetition=0"
+attr linkCheckBytes -1
+attr loadFactor 0.8*0.796
+attr maxOutstandingRecvBytes 0x2710
+attr measurement "$workloadType=GOOGLE_SEARCH_RPC, $msgSizeRanges=2 3 4 8 32 34 36 38 40 43 46 49 53 58 64 67 71 75 80 85 91 98 107 116 128 135 142 151 160 171 183 197 213 233 256 269 284 301 320 341 366 394 427 465 512 539 569 602 640 683 731 788 853 931 1024 1078 1365 2048 3151 4096 5120 6302 7447 8192 9102 10240 11703 12603 13653 14895 16384 17246 18204 19275 20480 25206 29789 34493 40960 46811 50412 54613 59578 65536 72818 81920 93623 100825 119156 137971 163840 187246 201649 262144 308405 403298 524288 1071908 3529904, $loadFactor=0.8*0.796, $interArrivalDist=exponential, $startTime=0s, $stopTime=3.0s, $seedInd=15, $prioLevels=8, $adaptiveSchedPrioLevels=3, $numSendersToKeepGranted=3, $prioResolverPrioLevels=8-3, $numServersPerTor=16, $numTors=9, $fabricLinkSpeed=40Gbps, $nicLinkSpeed=10Gbps, $edgeLinkDelay=0.0us, $fabricLinkDelay=0.0us, $hostSwTurnAroundTime=0.5us, $hostNicSxThinkTime=0.5us, $switchFixDelay=0.25us, $isFabricCutThrough=false, $RTT=0x2710, $transportSchemeType=HomaTransport, $isRoundRobinScheduler=false, $useUnschRateInScheduler=false, $maxOutstandingRecvBytes=0x2710, $unschedPrioResolutionMode=STATIC_CBF_GRADUATED, $unschedPrioUsageWeight=1, $cbfCapMsgSize=0x2710, $boostTailBytesPrio=0x2710, $defaultReqBytes=1442, $defaultUnschedBytes=7886, $senderScheme=SRBF, $accountForGrantTraffic=true, $linkCheckBytes=-1, $rlf=0.8"
+attr msgSizeRanges "2 3 4 8 32 34 36 38 40 43 46 49 53 58 64 67 71 75 80 85 91 98 107 116 128 135 142 151 160 171 183 197 213 233 256 269 284 301 320 341 366 394 427 465 512 539 569 602 640 683 731 788 853 931 1024 1078 1365 2048 3151 4096 5120 6302 7447 8192 9102 10240 11703 12603 13653 14895 16384 17246 18204 19275 20480 25206 29789 34493 40960 46811 50412 54613 59578 65536 72818 81920 93623 100825 119156 137971 163840 187246 201649 262144 308405 403298 524288 1071908 3529904"
+attr network DcnTopo
+attr nicLinkSpeed 10Gbps
+attr numSendersToKeepGranted 3
+attr numServersPerTor 16
+attr numTors 9
+attr prioLevels 8
+attr prioResolverPrioLevels 8-3
+attr processid 22875
+attr repetition 0
+attr replication #0
+attr resultdir results/homa
+attr rlf 0.8
+attr runnumber 15
+attr seedInd 15
+attr seedset 0
+attr senderScheme SRBF
+attr startTime 0s
+attr stopTime 3.0s
+attr switchFixDelay 0.25us
+attr transportSchemeType HomaTransport
+attr unschedPrioResolutionMode STATIC_CBF_GRADUATED
+attr unschedPrioUsageWeight 1
+attr useUnschRateInScheduler false
+attr workloadType GOOGLE_SEARCH_RPC
+
+vector 1368  DcnTopo.globalListener  "backlogged transmit messages"  ETV
+vector 1369  DcnTopo.globalListener  "Time division of num active sched senders"  ETV
+1368	6075 239 17785201 184832964 0 0.009 10 5 295 2437 660565
+1369	6314 140 184832965 184832965 0.005010727677627 0.009625303836918 4 0 3 6 14

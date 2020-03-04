@@ -39,6 +39,7 @@ def getInterestingModuleStats(moduleDic, statsKey, histogramKey):
     moduleStats = moduleStats.fromkeys(['count','min','mean','stddev','max','median','threeQuartile','ninety9Percentile'], 0.0)
     histogram = moduleDic.access(histogramKey)
     stats = moduleDic.access(statsKey)
+
     bins = [tuple[0] for tuple in histogram]
     if stats.count != 0:
         cumProb = cumsum([tuple[1]/stats.count for tuple in histogram])
@@ -552,13 +553,13 @@ def globalE2eStretchAndDelay(parsedStats, xmlParsedDic, msgBytesOnWireDigest, e2
     if not('globalListener' in parsedStats):
         e2eStretchAndDelayDigest.clear()
         return e2eStretchAndDelayDigest
-
     sizes = parsedStats.generalInfo.msgSizeRanges.strip('\"').split(' ')[:]
     #sizes.append('Huge')
     e2eStretchAndDelayDigest.delay = []
     e2eStretchAndDelayDigest.latency = []
     e2eStretchAndDelayDigest.stretch = []
 
+    print(str(sizes))
     for size in sizes:
         e2eDelayHistogramKey = 'globalListener.mesg{0}Delay:histogram.bins'.format(size)
         e2eDelayStatsKey = 'globalListener.mesg{0}Delay:histogram'.format(size)
