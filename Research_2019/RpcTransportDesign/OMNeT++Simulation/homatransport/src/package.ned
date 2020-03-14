@@ -1,3 +1,0 @@
-package homatransport;
-
-@license(LGPL);
