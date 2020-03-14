@@ -7,6 +7,7 @@
 ### 1. Source
   - Download [omnet++ version 4.6](https://omnetpp.org/download/old.html)
   - Download [Homa Source](https://github.com/PlatformLab/HomaSimulation/tree/omnet_simulations/RpcTransportDesign/OMNeT%2B%2BSimulation)
+  - Implement PBS based on above two sources. 
 ### 2. Compile omnettpp-4.6 
   - 1. Get into the omnettpp-4.6 directory
       - cd omnetpp-4.6 
@@ -46,7 +47,7 @@
       some problem require the path name to Start with Research. So, if you copy from the repository,
       you can move the Research folder within home directory.) 
       - ~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport
-  - 2. Generate makefiles
+  - 2. Generate makefiles.
       - make makefiles 
   - 3. Build the release version, and the executablle name is homatransport under
       ~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src
