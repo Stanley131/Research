@@ -66,5 +66,7 @@
     - homaTransportConfig.ini: specified config file, users can defined their own config file by following
       OMNET++ documentation. 
 
-   
+## 2. Simuation Instructions  
+  
+## 3. Plotting Instructions   
       
