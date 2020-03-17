@@ -53,15 +53,15 @@
   
     ``make MODE=release`` 
 
-(Note:If you get the error: "In file included from 
-inet/common/serializer/sctp/SCTPSerializer.cc:28:0: 
-./inet/common/serializer/sctp/headers/sctphdr.h:415:22: 
-error: flexible array member in union uint8_t info[];", 
-you have just to modify the code in the sctphdr.h and make it:  
+4. Note:If you get the error: "In file included from 
+  inet/common/serializer/sctp/SCTPSerializer.cc:28:0: 
+  ./inet/common/serializer/sctp/headers/sctphdr.h:415:22: 
+  error: flexible array member in union uint8_t info[];", 
+  you have just to modify the code in the sctphdr.h and make it:  
 
     ``*uint8_t info [128];*``
 
-More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
+  More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
 
 4. (Optional) Run some specific examples by changing into 
 the example's directory and executing ``./run``
@@ -84,7 +84,7 @@ the example's directory and executing ``./run``
 
 4. Run some examples. Get into dcntop folder and run the following command:  
   
-  ``../homatransport -u Cmdenv -c WorkloadHadoop --r_alpha=100 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig.ini``
+    ``../homatransport -u Cmdenv -c WorkloadHadoop --r_alpha=100 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig.ini``
 
 5. Notes: 
   
