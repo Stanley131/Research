@@ -12,26 +12,27 @@
 ### 2. Compile omnettpp-4.6 
 1. Get into the omnettpp-4.6 directory
   
-  cd omnetpp-4.6 
+    ``cd omnetpp-4.6`` 
 
 2. set enviroment
     
-  .setenv
+    ``.setenv``
 
 3. open ``~/.bash_profile`` and add the following line 
 
-  export PATH=$PATH:$HOME/omnetpp-4.6/bin 
+    ``export PATH=$PATH:$HOME/omnetpp-4.6/bin`` 
 
 4. use ``.bash_profile``
     
-  ``source ~/.bash_profile``
+    ``source ~/.bash_profile``
 
 5. Run the configuriation 
     
-    NO_TCL=1 ./configure
+    ``NO_TCL=1 ./configure``
 
 6. compile omnettpp-4.6
-    make MODE=release
+
+    ``make MODE=release``
 
 7. Copy the diff patch below into a file (eg. patch.diff) and apply
     it to OMNeT++ directory and rebuild OMNeT++ from the directory
@@ -42,15 +43,15 @@
 ### 3. Compile INET
 1. change to init directory. 
   
-  cd inet 
+  ``cd inet`` 
 
 2. Generate makefiles
 
-  make makefiles 
+  ``make makefiles`` 
 
 3. Build the release version. 
   
-  make MODE=release 
+  ``make MODE=release`` 
 
 (Note:If you get the error: "In file included from 
 inet/common/serializer/sctp/SCTPSerializer.cc:28:0: 
@@ -58,7 +59,7 @@ inet/common/serializer/sctp/SCTPSerializer.cc:28:0:
 error: flexible array member in union uint8_t info[];", 
 you have just to modify the code in the sctphdr.h and make it:  
 
-  *uint8_t info [128];*
+  ``*uint8_t info [128];*``
   More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
 
 4. (Optional) Run some specific examples by changing into 
@@ -73,16 +74,16 @@ the example's directory and executing ``./run``
 
 2. Generate makefiles.
     
-    make makefiles 
+    ``make makefiles`` 
 
 3. Build the release version, and the executablle name is homatransport under
     ``~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src``
   
-    make MODE=release
+    ``make MODE=release``
 
 - 4. Run some examples. Get into dcntop folder and run the following command:  
   
-  ../homatransport -u Cmdenv -c WorkloadHadoop --r_alpha=100 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig.ini
+  ``../homatransport -u Cmdenv -c WorkloadHadoop --r_alpha=100 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig.ini``
 
 - 5. Notes: 
   
