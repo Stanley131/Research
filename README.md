@@ -61,9 +61,9 @@
 
     ``*uint8_t info [128];*``
 
-  More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
+   More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)
 
-4. (Optional) Run some specific examples by changing into 
+5. (Optional) Run some specific examples by changing into 
 the example's directory and executing ``./run``
 
 ### 4. Compile INET  
