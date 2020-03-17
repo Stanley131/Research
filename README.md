@@ -43,15 +43,15 @@
 ### 3. Compile INET
 1. change to init directory. 
   
-  ``cd inet`` 
+    ``cd inet`` 
 
 2. Generate makefiles
 
-  ``make makefiles`` 
+    ``make makefiles`` 
 
 3. Build the release version. 
   
-  ``make MODE=release`` 
+    ``make MODE=release`` 
 
 (Note:If you get the error: "In file included from 
 inet/common/serializer/sctp/SCTPSerializer.cc:28:0: 
@@ -59,8 +59,9 @@ inet/common/serializer/sctp/SCTPSerializer.cc:28:0:
 error: flexible array member in union uint8_t info[];", 
 you have just to modify the code in the sctphdr.h and make it:  
 
-  ``*uint8_t info [128];*``
-  More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
+    ``*uint8_t info [128];*``
+
+More details here: [stack overflow](https://stackoverflow.com/questions/37969272/error-compiling-inet-framework-for-omnet:)) 
 
 4. (Optional) Run some specific examples by changing into 
 the example's directory and executing ``./run``
