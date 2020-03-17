@@ -81,11 +81,11 @@ the example's directory and executing ``./run``
   
     ``make MODE=release``
 
-- 4. Run some examples. Get into dcntop folder and run the following command:  
+4. Run some examples. Get into dcntop folder and run the following command:  
   
   ``../homatransport -u Cmdenv -c WorkloadHadoop --r_alpha=100 --r_mode=homa -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET homaTransportConfig.ini``
 
-- 5. Notes: 
+5. Notes: 
   
   - homatransport: executable name 
   - -u Cmdenv: using command line argument 
