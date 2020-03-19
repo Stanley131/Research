@@ -5,7 +5,7 @@ Install the necessary programs:
 - Run "R" on command line
     -  install.packages("reshape2")
     -  install.packages("ggplot2")
-    -  install.packages("gridextra")
+    -  install.packages("gridExtra")
 
 Installing package into ‘/usr/local/lib/R/site-library’
 (as ‘lib’ is unspecified)
