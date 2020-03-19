@@ -1,4 +1,19 @@
-  ## ggplot 
+Install the necessary programs:
+- sudo apt-get install python-pip
+- pip install numpy
+- sudo apt-get install r-base-core
+- Run "R" on command line
+    -  install.packages("reshape2")
+    -  install.packages("ggplot2")
+    -  install.packages("gridextra")
+
+Installing package into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+Warning in install.packages("reshape2") :
+  'lib = "/usr/local/lib/R/site-library"' is not writable
+Would you like to use a personal library instead?  (y/n) y
+
+## ggplot 
   1. The output files are specified in the ini confige file.   
     - result-dir (parameter in the config file)
     - example: result-dir = results/manyReceivers/comparison/linkCheckBytes__${linkCheckBytes}
