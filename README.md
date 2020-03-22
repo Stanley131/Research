@@ -144,7 +144,8 @@ the example's directory and executing ``./run``
       │   └── allrpc_blind_5.sca    
       └── fileList.txt      
   
-    ``mkunal@node-1:~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src/dcntopo/results/blind$ cat fileList.txt``   
+    ``mkunal@node-1:~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src/dcntopo/results/blind$ cat fileList.txt``  
+    
       blind10/allrpc_blind_10.sca      
       blind2.5/allrpc_blind_2.5.sca      
       blind2/allrpc_blind_2.sca      
@@ -164,7 +165,8 @@ the example's directory and executing ``./run``
     ``  
     And the result graphs are in the plots directory.    
   
-7. Copy the pdf file to the local machine: 
+7. Copy the pdf file to the local machine:   
+
     ``
       scp username@ip_address:~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/plots/TailStretchVsTransport_rho0.8.pdf . 
     ``
