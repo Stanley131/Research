@@ -167,6 +167,4 @@ the example's directory and executing ``./run``
   
 7. Copy the pdf file to the local machine:   
 
-    ``
-      scp username@ip_address:~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/plots/TailStretchVsTransport_rho0.8.pdf . 
-    ``
+    `` scp username@ip_address:~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/plots/TailStretchVsTransport_rho0.8.pdf .``
