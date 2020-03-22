@@ -103,20 +103,23 @@ the example's directory and executing ``./run``
 ## 2. Simuation Instructions  
 
 ## 3. Plotting Instructions 
+
 ### 1. setup 
 1. install R packages:   
-
-  ``
-  sudo apt install r-base
-  ``
+  
+  ``sudo apt install r-base``
   
 Then, run ``R`` to install the following 3 packages:   
   ``
-  install.packages("gridExtra")  
+  install.packages("gridExtra")
+  ``
+  ``  
   install.packages("ggplot2")   
+  ``
+  ``
   install.packages("reshape2")  
-  `` 
-  
+  ``
+
 2. goto the following directory:  
   
   ``
@@ -136,7 +139,7 @@ the following sample structure of the result directory:
   ``
   mkunal@node-1:~/Research/RpcTransportDesign/OMNeT++Simulation/homatransport/src/dcntopo/results/blind$ tree   
   .  
-  ├── blind10  
+  ├── blind10   
   │   └── allrpc_blind_10.sca  
   ├── blind2   
   │   └── allrpc_blind_2.sca  
