@@ -105,26 +105,20 @@ the example's directory and executing ``./run``
 ## 3. Plotting Instructions 
 
 ### 1. setup 
+
 1. install R packages:   
   
-  ``sudo apt install r-base``
+    ``sudo apt install r-base``  
   
 Then, run ``R`` to install the following 3 packages:   
-  ``
-  install.packages("gridExtra")
-  ``
-  ``  
-  install.packages("ggplot2")   
-  ``
-  ``
-  install.packages("reshape2")  
-  ``
+  
+    ``install.packages("gridExtra")``
+    ``install.packages("ggplot2")``
+    ``install.packages("reshape2")``
 
 2. goto the following directory:  
   
-  ``
-  cd ~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScript
-  ``
+    ``cd ~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScript``
     
 Then, run the following python script:   
  
