@@ -37,9 +37,12 @@ def getStatsFromHist(bins, cumProb, idx):
 def getInterestingModuleStats(moduleDic, statsKey, histogramKey):
     moduleStats = AttrDict()
     moduleStats = moduleStats.fromkeys(['count','min','mean','stddev','max','median','threeQuartile','ninety9Percentile'], 0.0)
-    histogram = moduleDic.access(histogramKey)
-    stats = moduleDic.access(statsKey)
+    try: 
+    	histogram = moduleDic.access(histogramKey)
+    except: 
+	return moduleStats
 
+    stats = moduleDic.access(statsKey)
     bins = [tuple[0] for tuple in histogram]
     if stats.count != 0:
         cumProb = cumsum([tuple[1]/stats.count for tuple in histogram])
@@ -461,18 +464,30 @@ def globalMesgBytesOnWire(parsedStats, xmlParsedDic, msgBytesOnWireDigest):
     #sizes.append('Huge')
     totalBytes = 0.0
     totalCnt = 0.0
+
+    exception = 0
+    non_exception = 0
     for size in sizes:
         bytesOnWire = AttrDict()
         bytesOnWire.bytes = 0.1
         bytesOnWire.cnt = 0.0
 
         bytesStatsKey = 'globalListener.mesg{0}BytesOnWire:histogram'.format(size)
-        bytesOnWire.cnt += int(parsedStats.access(bytesStatsKey + '.count'))
-        totalCnt +=  int(parsedStats.access(bytesStatsKey + '.count'))
-        bytesOnWire.bytes += int(parsedStats.access(bytesStatsKey + '.sum'))
-        totalBytes += int(parsedStats.access(bytesStatsKey + '.sum'))
 
+	# print("bytesStatsKey: ", bytesStatsKey)
+	try: 
+            bytesOnWire.cnt += int(parsedStats.access(bytesStatsKey + '.count'))
+            totalCnt +=  int(parsedStats.access(bytesStatsKey + '.count'))
+            bytesOnWire.bytes += int(parsedStats.access(bytesStatsKey + '.sum'))
+            totalBytes += int(parsedStats.access(bytesStatsKey + '.sum'))
+	    non_exception += 1
+	except:
+	    exception += 1
+		
         msgBytesOnWireDigest['{0}'.format(size)] = bytesOnWire
+   
+    print("exception: ", exception)
+    print("non_excetion: ", non_exception)
 
     for size in msgBytesOnWireDigest.keys():
         msgBytesOnWireDigest[size].cntPercent = 100 * msgBytesOnWireDigest[size].cnt / totalCnt
@@ -553,13 +568,13 @@ def globalE2eStretchAndDelay(parsedStats, xmlParsedDic, msgBytesOnWireDigest, e2
     if not('globalListener' in parsedStats):
         e2eStretchAndDelayDigest.clear()
         return e2eStretchAndDelayDigest
+
     sizes = parsedStats.generalInfo.msgSizeRanges.strip('\"').split(' ')[:]
     #sizes.append('Huge')
     e2eStretchAndDelayDigest.delay = []
     e2eStretchAndDelayDigest.latency = []
     e2eStretchAndDelayDigest.stretch = []
 
-    print(str(sizes))
     for size in sizes:
         e2eDelayHistogramKey = 'globalListener.mesg{0}Delay:histogram.bins'.format(size)
         e2eDelayStatsKey = 'globalListener.mesg{0}Delay:histogram'.format(size)
