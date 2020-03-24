@@ -107,7 +107,7 @@ the example's directory and executing ``./run``
     ``nohup ../homatransport -u Cmdenv --output-scalar-file="~/ResultDir/allrpc_blind_1000.sca" -c WorkloadHadoop --r_alpha=2 --r_mode=blind -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET allrpcTransportConfig.ini &``
 
 ### 2. Run a single simulation  && output only scalar file     
-    
+
     ``../homatransport -u Cmdenv --output-scalar-file="~/ResultDir/allrpc_blind_1000.sca" -c WorkloadHadoop --r_alpha=2 --r_mode=blind -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET allrpcTransportConfig.ini``
 
 ### 3. Run a single simulation  && output only scalar file and vector file   
