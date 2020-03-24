@@ -1,4 +1,0 @@
-[submodule "share/googletest"]
-	path = share/googletest
-	url = git@github.com:google/googletest.git
-	branch = master
