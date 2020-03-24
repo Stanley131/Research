@@ -110,7 +110,7 @@ the example's directory and executing ``./run``
 
     ../homatransport -u Cmdenv --output-scalar-file="~/ResultDir/allrpc_blind_1000.sca" -c WorkloadHadoop --r_alpha=2 --r_mode=blind -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET allrpcTransportConfig.ini
 
-### 3. Run a single simulation  && output only scalar file and vector file   
+### 3. Run a single simulation  && output a scalar file and vector file   
 
     ../homatransport -u Cmdenv --output-scalar-file="~/ResultDir/allrpc_blind_1000.sca" --output-vector-file="~/ResultDir/allrpc_blind_1000.vci" -c WorkloadHadoop --r_alpha=2 --r_mode=blind -r 15 -n ..:../../simulations:../../../inet/examples:../../../inet/src -l ../../../inet/src/INET allrpcTransportConfig.ini
 
@@ -180,4 +180,4 @@ Note: the output file will be in ``~/ResultDir/``
   
 7. Copy the pdf file to the local machine:   
 
-    `` scp username@ip_address:~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/plots/TailStretchVsTransport_rho0.8.pdf .``
+    scp username@ip_address:~/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/plots/TailStretchVsTransport_rho0.8.pdf .
