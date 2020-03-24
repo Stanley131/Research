@@ -1,3 +1,0 @@
-homa/WorkloadHadoop-15-homa-test_sim_2.sca
-blind/WorkloadHadoop-15-blind-test_sim_2.sca
-aware/WorkloadHadoop-15-aware-test_sim_2.sca
