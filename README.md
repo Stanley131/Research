@@ -16,7 +16,7 @@
 
 2. set enviroment
     
-    ``.setenv``
+    ``. setenv``
 
 3. open ``~/.bash_profile`` and add the following line 
 
