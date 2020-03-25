@@ -19,6 +19,12 @@
 #include "transport/HomaPkt.h"
 #include "transport/PriorityResolver.h"
 #include "HomaTransport.h"
+#include <stdio.h>
+#include <inttypes.h>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 
 // Required by OMNeT++ for all simple modules.
 Define_Module(HomaTransport);
@@ -1778,13 +1784,29 @@ HomaTransport::ReceiveScheduler::SenderState::handleInboundPkt(HomaPkt* rxPkt)
         // remove this message from the incompleteRxMsgs
 	// research 
 	// 1. get the age_of_flow 
-	// 2. write the flow size (bytes) and flow completion time (sec) to file
+	// 2. write the flow size (bytes) and flow completion time (nano sec) to file
 	// 3. close the file somewhere else 
-	simtime_t r_ageOfFlow = (simTime() - incompleteMesgs -> reqArrivalTime) * (0.000000000000001);
-        uint32_t incompleteMesgs -> msgSize;
-
+	 
+	simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (inboundMesg -> msgCreationTime).inUnit(SIMTIME_NS);
 	
+        uint32_t r_flowSize = inboundMesg -> msgSize;
+	std::string workloadTypye = homaConfig->workloadType;
+	std::string r_mode = homaConfig->r_mode;
+        float r_alpha = homaConfig->r_alpha;
 
+	//convert float to str
+	std::ostringstream alpha_obj;
+	alpha_obj << std::fixed;
+	alpha_obj << r_alpha;
+	std::string r_alpha_str = alpha_obj.str();
+
+	//open the file and write to it 
+	std::ofstream flow_result;
+	std::string flow_fileName = r_mode + "_" + workloadTypye + "_" +  r_alpha_str;
+	flow_result.open(flow_fileName.c_str(), std::ios_base::app);
+	flow_result << r_flowSize << " " << r_ageOfFlow.dbl() << "\n";
+	flow_result.close();
+	
         incompleteMesgs.erase(inboundMesg->msgIdAtSender);
         delete inboundMesg;
         ret.second = -1;
@@ -2476,13 +2498,13 @@ HomaTransport::ReceiveScheduler::SchedSenders::getGrantPrioFromRawPrio(std::stri
     
     }
     std::cout<<"\n"; 
-    */
 
+    */
     int i = 7; 
-    while (i >=0 && rawPrio < limits[i]){
+    while (i >=0 && rawPrio >= limits[i]){
         i--;
     }
-    return (i==-1) ? 0: i;   
+    return (i==-1) ? 7: 7-i;   
 }	
 
 
@@ -2517,68 +2539,61 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(uint16_t m_nonBlind
 	switch (m_profile) {
 		case 1: // W1 (alpha = 10)
 			if (m_nonBlind) { 
-				limits = {1.64e-08, 3.15e-19, 6.08e-30, 1.17e-40, 2.26e-51, 4.37e-62, 8.42e-72}; // generalized 1.62e-83 (the last one removed)
-				//limits = {5.10708e-41, 3.12373e-41, 2.67044e-41, 2.19076e-41, 1.87042e-41, 1.59852e-41, 1.37976e-41, 1.18287e-41}; // overfitted
-				//limits = {3.456e-39, 2.574e-41, 1.957e-41, 1.541e-41, 1.224e-41, 1.56267e-44, 1.56257e-44, 1.56255e-44};
+				limits = {8.9138E+04, 7.8232E+04, 6.7325E+04, 5.6419E+04, 4.5512E+04, 3.4606E+04, 2.3699E+04}; // 1.2793E+04};
+				//limits = {1.64e-08, 3.15e-19, 6.08e-30, 1.17e-40, 2.26e-51, 4.37e-62, 8.42e-72}; // generalized 1.62e-83 (the last one removed)
 			} else {
-				limits = {2.5e-19, 1e-21, 4.4e-24, 1.9e-26, 7.8e-29, 3.3e-31, 1.4e-33 }; //5.8e-36
+				limits = {-1.0898E+00, -1.1178E+00, -1.1458E+00, -1.1738E+00, -1.2018E+00, -1.2298E+00, -1.2579E+00}; //-1.2859E+00};
 			}
 			break;
 		case 2: // W2 (alpha = 10)
 			if (m_nonBlind) {
-				limits = {3.7e-07, 4.8e-18, 6.3e-29, 8.24e-40, 1.07e-50, 1.41e-61, 1.84e-72}; // generalized  3.13e-94
-				//limits = {1.87761e-39, 2.22075e-40, 6.0904e-41, 2.93441e-41, 2.17523e-41, 1.5628e-44, 1.5627e-44, 1.56258e-44}; // overfitted
-				//limits = {3.96e-40, 9.21e-41, 3.61e-41, 2.63e-41, 1.89e-41, 1.5628e-44, 1.56269e-44, 1.56258e-44};
+				limits = {3.5680E+05, 3.1243E+05, 2.6807E+05, 2.2371E+05, 1.7934E+05, 1.3498E+05, 9.0614E+04}; //  4.6250E+04};
+				//limits = {3.7e-07, 4.8e-18, 6.3e-29, 8.24e-40, 1.07e-50, 1.41e-61, 1.84e-72}; // generalized  3.13e-94
 			} else {
-				limits = {6.1e-20, 1.5e-23, 3.6e-27, 8.7e-31, 2.1e-34, 5.1e-38, 1.2e-41}; //2.9e-45
+				limits = {-9.1855E-01, -1.2007E+00, -1.4828E+00, -1.7650E+00, -2.0471E+00, -2.3293E+00, -2.6114E+00}; //-2.8936E+00};
+				//limits = {6.1e-20, 1.5e-23, 3.6e-27, 8.7e-31, 2.1e-34, 5.1e-38, 1.2e-41}; //2.9e-45
 			}
 			break;
 		case 3: // W3 (alpha = 10)
 			if (m_nonBlind) {
-				limits = {4.08e-06, 3.95e-17, 3.82e-28, 3.69e-39, 3.58e-50, 3.45e-61, 3.34e-72, 3.24e-82}; // generalized
-				//limits = {7.46415e-36, 2.4216e-38, 5.70689e-39, 2.40171e-39, 1.00258e-39, 4.90344e-40, 1.85818e-40, 4.10319e-41}; // overfitted
-				//limits = {4.1604e-37, 2.75841e-38, 7.28671e-39, 3.57929e-39, 1.72651e-39, 6.96279e-40, 2.26281e-40, 2.82834e-41};
-				//limits = {3.6527e-38, 1.1489e-38, 5.433e-39, 2.8375e-39, 1.316e-39, 4.943e-40, 1.4986e-40};
+				limits = {1.5731E+06, 1.3767E+06, 1.1803E+06, 9.8388E+05, 7.8748E+05, 5.9108E+05, 3.9468E+05}; // 1.9829E+05};
+				//limits = {4.08e-06, 3.95e-17, 3.82e-28, 3.69e-39, 3.58e-50, 3.45e-61, 3.34e-72, 3.24e-82}; // generalized
 			} else {
-				limits = {5.8e-21, 7.3e-26, 9e-31, 1.1e-35, 1.3e-40, 1.6e-45, 2e-50, 2.5e-55};
+				limits = {-9.5897E-01, -1.4530E+00, -1.9470E+00, -2.4411E+00, -2.9351E+00, -3.4292E+00, -3.9232E+00};// -4.4172E+00};
+				//limits = {5.8e-21, 7.3e-26, 9e-31, 1.1e-35, 1.3e-40, 1.6e-45, 2e-50, 2.5e-55};
 			}
 			break;
 		case 4: // W4 (alpha = 10)
 			if (m_nonBlind) {
-				//limits = {1.75064e-35, 3.27967e-37, 1.03718e-37, 4.73471e-38, 2.3662e-38, 1.16651e-38, 5.71894e-39, 1.90036e-39}; // overfitted
-				//limits = {1.42897e-41, 3.32968e-49, 1.58941e-54, 4.02692e-58, 4.00434e-62, 4.20953e-67, 1.11941e-67, 1.86391e-68};
-				limits = {1.62e-05, 1.32e-16, 1.07e-27, 8.76e-39, 7.13e-50, 5.8e-61, 4.72e-72}; // generalized  3.84e-83
+				//limits = {1.62e-05, 1.32e-16, 1.07e-27, 8.76e-39, 7.13e-50, 5.8e-61, 4.72e-72}; // generalized  3.84e-83
+				limits = {6.8031E+07, 5.9527E+07, 5.1024E+07, 4.2520E+07, 3.4017E+07, 2.5513E+07, 1.7009E+07};// 8.5056E+06};
 			} else {
-				limits = {2.6e-21, 1.2e-26, 5.3e-32, 2.4e-37, 1.1e-42, 4.9e-48, 2.2e-53};//1e-58}
+				limits = {-6.2841E-01, -9.6317E-01, -1.2979E+00, -1.6327E+00, -1.9674E+00, -2.3022E+00, -2.6370E+00}; // -2.9717E+00} new log
 			}
 			break;
 		case 5: // W5 (alpha = 10)
 			if (m_nonBlind) {
-				//limits = {4.28436e-29, 4.7178e-36, 9.17517e-37, 2.76119e-37, 1.10387e-37, 5.29671e-38, 2.4704e-38, 9.65756e-39}; // overfitted
-				//limits = {1.33137e-48, 3.86956e-55, 1.43643e-59, 3.79086e-63, 3.35128e-65, 1.13623e-66, 3.13629e-67, 8.19613e-68};
-				limits = {4.71e-05, 3.94e-16, 3.3e-27, 2.76e-38, 2.31e-49, 1.94e-60, 1.62e-71}; // generalized 1.36e-82
+				limits = {8.4291E+07, 7.3755E+07, 6.3219E+07, 5.2683E+07, 4.2148E+07, 3.1612E+07, 2.1076E+07}; // 1.0540E+07};
+				//limits = {4.71e-05, 3.94e-16, 3.3e-27, 2.76e-38, 2.31e-49, 1.94e-60, 1.62e-71}; // generalized 1.36e-82
 			} else {
-				limits = {1.2e-21, 2.7e-27, 6e-33, 1.3e-38, 3e-44, 6.5e-50, 1.4e-55}; // 3.2e-61
+				limits = {-3.8742E-01, -5.0514E-01, -6.2287E-01, -7.4060E-01, -8.5832E-01, -9.7605E-01, -1.0938E+00}; // -1.2115E+00 new log 		
 			}
 			break;		
 		default:
 			std::cout << m_profile << std::endl;
 			std::cout << "invalid profile specified." << "\n";
 	}
+
 	/*
-	for (int i=0; i<8; i++) {
-		m_prioLimits[i] = limits[i];
-	}*/
-	
-	//return limits; 
 	int l_size = static_cast<int>(limits.size());
 	for(int i=0; i < l_size; i++){
-   		limits[i] = log10(limits[i]);
+   		limits[i] = (limits[i]);
 	}
-	
+	*/
 	//for(std::vector<double>::iterator it = limits.begin(); it != limits.end(); ++it) {
     		//it = log10(it);
 	//}
+	//std::reverse(limits.begin(),limits.end());
 	return limits;
 }
 
@@ -2589,66 +2604,65 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
     // std::cout << "[Experiment mode] " << homaConfig->r_mode << "\n";
 
     int grantPrio;    
-    InboundMessage* mesg = st.s -> incompleteMesgs[st.msgId]; 
+    InboundMessage* mesg = st.s -> incompleteMesgs[st.msgId];
+
+	std::string workloadTypye = homaConfig->workloadType;
+	std::string r_mode = homaConfig->r_mode;
+        float r_alpha = homaConfig->r_alpha;
+
+	//convert float to str
+	std::ostringstream alpha_obj;
+	alpha_obj << std::fixed;
+	alpha_obj << r_alpha;
+	std::string r_alpha_str = alpha_obj.str();
+
+	//open the file and write to it 
+	std::ofstream alpha_result;
+	std::string alpha_fileName = "prio_" + r_mode + "_" + workloadTypye + "_" +  r_alpha_str;
+	alpha_result.open(alpha_fileName.c_str(), std::ios_base::app);
+	//flow_result << r_flowSize << " " << r_ageOfFlow.dbl() << "\n";
+	//flow_result.close();
+
     
-    /*
-    //Print out all PBS required elements 
-    if(mesg != NULL){ 
-	    std::cout<<"msgId: "<< st.msgId<<" Message Size: "<<mesg-> msgSize <<
-		 " message Left: "<<mesg -> bytesToReceive <<"\n"; 
-	    	    
-	    std::cout <<"msgIdAtSender: "<< mesg -> msgIdAtSender <<"\n"; 
-	    std::cout <<"Message bytes remaining: "<< mesg -> bytesToReceive <<"\n";
-	    std::cout << "Message bytes sent: " << mesg -> msgSize - mesg -> bytesToReceive << "\n";  	
-	    std::cout <<"Message Size: "<< mesg -> msgSize <<"\n"; 
-	    
-	    std::cout <<"Message Creation Time: "<< mesg -> msgCreationTime <<"\n";
-	    std::cout <<"First Packet Arrival Time: "<< mesg -> reqArrivalTime <<"\n"; 
-	    std::cout <<"Current Packet Time: "<< simTime() <<"\n";
-	   
-	   
-	    // Address
-	    std::cout <<"Sender Address: " << st.s -> getSenderAddr().str() <<"\n"; 
-	    std::cout <<"receiver Address: " << mesg -> destAddr.str() <<"\n"; 
-	    
-    }
-    */
     if (mesg == NULL || homaConfig->r_mode == "homa") {    
     	grantPrio =
         	st.sInd + homaConfig->allPrio - homaConfig->adaptiveSchedPrioLevels;
+	    // std::cout<<"msg == Null msgId: "<<st.msgId << "  grantPrio: "<<grantPrio<<"\n";
     	grantPrio = std::min(homaConfig->allPrio - 1, grantPrio);
     	EV << "Get prio for mesg. sInd: " << st.sInd << ", grantPrio: " <<
-        	grantPrio << ", allPrio: " << homaConfig->allPrio << ", schedPrios: " <<
-        	homaConfig->adaptiveSchedPrioLevels << endl;
-	    
+        grantPrio << ", allPrio: " << homaConfig->allPrio << ", schedPrios: " <<
+        homaConfig->adaptiveSchedPrioLevels << endl;
+	    //std::cout << "msgId: ["<<st.msgId<< "] homa prio [" << grantPrio << "]"<<" homaConfig->allPrio: ["<< homaConfig->allPrio<<"\n"; 
         return grantPrio; 
     } else if (homaConfig->r_mode == "blind") {
     	// age of flow should be in nanoseconds
-	// use alpha = 2 for the first run
-        uint32_t r_bytesSent = mesg -> msgSize - mesg -> bytesToReceive;	
-        //simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
-        simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.000001);
-	//std::cout<<"r_ageOfFlow: "<<r_ageOfFlow<<"\n"; 
-	
-	//float rawPrio = r_ageOfFlow.dbl() / pow(r_bytesSent, homaConfig->r_alpha); 
-	double rawPrio = log10(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log10(r_bytesSent));
-	//std::cout<<"rawPrio: "<<rawPrio<<"\n"; 
-	
+        // use alpha = 2 for the first run
+            uint32_t r_bytesSent = mesg -> msgSize - mesg -> bytesToReceive;	
+            simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+                
+        //float rawPrio = r_ageOfFlow.dbl() / pow(r_bytesSent, homaConfig->r_alpha); 
+        double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesSent));
+        //std::cout<<"rawPrio: "<<rawPrio<<"\n"; 
+        
         grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio); 
-	//std::cout << "grantPrio: "<< grantPrio<<"\n"; 
-	return grantPrio;
+        alpha_result << r_bytesSent << " " << rawPrio << " " << grantPrio<< "\n";
+        alpha_result.close();
+        //std::cout << "grantPrio: "<< grantPrio<<"\n"; 
+	    
+        // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
+        return grantPrio;
 
     } else if (homaConfig->r_mode == "aware") {
         uint32_t r_bytesRemaining = mesg -> bytesToReceive;
-        simtime_t r_ageOfFlow = (simTime() - mesg -> reqArrivalTime) * (0.000001);
-	double rawPrio = log10(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log10(r_bytesRemaining));
-	grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
-	return grantPrio;
+        simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+	    double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesRemaining));
+	    grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
+	    alpha_result << r_bytesRemaining  << " " << rawPrio << " " << grantPrio<< "\n";
+	    alpha_result.close();
+
+        // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
+	    return grantPrio;
     }
-
-    return 7;
-
-
 }
 
 /**
