@@ -1786,7 +1786,7 @@ HomaTransport::ReceiveScheduler::SenderState::handleInboundPkt(HomaPkt* rxPkt)
 	// 1. get the age_of_flow 
 	// 2. write the flow size (bytes) and flow completion time (nano sec) to file
 	// 3. close the file somewhere else 
-	 
+	
 	simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (inboundMesg -> msgCreationTime).inUnit(SIMTIME_NS);
 	
         uint32_t r_flowSize = inboundMesg -> msgSize;
@@ -1806,7 +1806,7 @@ HomaTransport::ReceiveScheduler::SenderState::handleInboundPkt(HomaPkt* rxPkt)
 	flow_result.open(flow_fileName.c_str(), std::ios_base::app);
 	flow_result << r_flowSize << " " << r_ageOfFlow.dbl() << "\n";
 	flow_result.close();
-	
+
         incompleteMesgs.erase(inboundMesg->msgIdAtSender);
         delete inboundMesg;
         ret.second = -1;
@@ -2556,8 +2556,10 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(uint16_t m_nonBlind
 			break;
 		case 3: // W3 (alpha = 10)
 			if (m_nonBlind) {
-				limits = {1.5731E+06, 1.3767E+06, 1.1803E+06, 9.8388E+05, 7.8748E+05, 5.9108E+05, 3.9468E+05}; // 1.9829E+05};
+				//limits = {1.5731E+06, 1.3767E+06, 1.1803E+06, 9.8388E+05, 7.8748E+05, 5.9108E+05, 3.9468E+05}; // 1.9829E+05};
 				//limits = {4.08e-06, 3.95e-17, 3.82e-28, 3.69e-39, 3.58e-50, 3.45e-61, 3.34e-72, 3.24e-82}; // generalized
+				limits = {1.5417E+01, 6.5709E+00, 2.8007E+00, 1.1937E+00, 5.0878E-01, 2.1685E-01, 9.2426E-02, 3.9394E-02};	
+				//std::cout << "aware limit\n";
 			} else {
 				limits = {-9.5897E-01, -1.4530E+00, -1.9470E+00, -2.4411E+00, -2.9351E+00, -3.4292E+00, -3.9232E+00};// -4.4172E+00};
 				//limits = {5.8e-21, 7.3e-26, 9e-31, 1.1e-35, 1.3e-40, 1.6e-45, 2e-50, 2.5e-55};
@@ -2590,6 +2592,7 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioLimits(uint16_t m_nonBlind
    		limits[i] = (limits[i]);
 	}
 	*/
+
 	//for(std::vector<double>::iterator it = limits.begin(); it != limits.end(); ++it) {
     		//it = log10(it);
 	//}
@@ -2618,7 +2621,7 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 
 	//open the file and write to it 
 	std::ofstream alpha_result;
-	std::string alpha_fileName = "prio_" + r_mode + "_" + workloadTypye + "_" +  r_alpha_str;
+	std::string alpha_fileName = "/users/mkunal/ResultDir/alpha_limit/prio_" + r_mode + "_" + workloadTypye + "_" +  r_alpha_str;
 	alpha_result.open(alpha_fileName.c_str(), std::ios_base::app);
 	//flow_result << r_flowSize << " " << r_ageOfFlow.dbl() << "\n";
 	//flow_result.close();
@@ -2638,7 +2641,8 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
     	// age of flow should be in nanoseconds
         // use alpha = 2 for the first run
             uint32_t r_bytesSent = mesg -> msgSize - mesg -> bytesToReceive;	
-            simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+        //    simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+	simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (mesg -> msgCreationTime).inUnit(SIMTIME_NS);
                 
         //float rawPrio = r_ageOfFlow.dbl() / pow(r_bytesSent, homaConfig->r_alpha); 
         double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesSent));
@@ -2654,12 +2658,14 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 
     } else if (homaConfig->r_mode == "aware") {
         uint32_t r_bytesRemaining = mesg -> bytesToReceive;
-        simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+        //simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+	simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (mesg -> msgCreationTime).inUnit(SIMTIME_NS);
 	    double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesRemaining));
 	    grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
 	    alpha_result << r_bytesRemaining  << " " << rawPrio << " " << grantPrio<< "\n";
 	    alpha_result.close();
-
+	    //std::cout << "rawPrio: "<<rawPrio<<"\n";
+	    //std::cout << "r_ageOfflow: "<<r_ageOfFlow<<"\n";
         // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
 	    return grantPrio;
     }
