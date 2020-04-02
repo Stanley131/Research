@@ -451,7 +451,7 @@ if __name__ == '__main__':
         """
         prepE2EStretchVsTransport(resultDir, outputFileName, resultFiles)
         plotPath = os.environ['HOME'] + "/Research/RpcTransportDesign/OMNeT++Simulation/analysis/PlotScripts/"
-        print subprocess.Popen('cd {0}; Rscript PBS_Transport.r'.format(plotPath),
+        print subprocess.Popen('cd {0}; Rscript pbs_transport.r'.format(plotPath),
             shell=True, stdout=subprocess.PIPE).stdout.read()
     elif plotType == 'StretchVsUnschedPrioMode':
         f = open(resultDir + '/fileList.txt')
