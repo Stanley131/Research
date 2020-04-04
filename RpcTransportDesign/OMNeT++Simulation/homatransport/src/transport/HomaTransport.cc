@@ -2654,24 +2654,24 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
         //std::cout<<"rawPrio: "<<rawPrio<<"\n"; 
         
         grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio); 
-        alpha_result << r_bytesSent << " " << rawPrio << " " << grantPrio<< "\n";
-        alpha_result.close();
+        //alpha_result << r_bytesSent << " " << rawPrio << " " << grantPrio<< "\n";
+        //alpha_result.close();
         //std::cout << "grantPrio: "<< grantPrio<<"\n"; 
 	    
         // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
         return grantPrio;
 
     } else if (homaConfig->r_mode == "aware") {
-        uint32_t r_bytesRemaining = mesg -> bytesToReceive;
-        //simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
-	simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (mesg -> msgCreationTime).inUnit(SIMTIME_NS);
+    	    uint32_t r_bytesRemaining = mesg -> bytesToReceive;
+	    //simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
+	    simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (mesg -> msgCreationTime).inUnit(SIMTIME_NS);
 	    double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesRemaining));
 	    grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
 	    //alpha_result << r_bytesRemaining  << " " << rawPrio << " " << grantPrio<< "\n";
 	    //alpha_result.close();
 	    //std::cout << "rawPrio: "<<rawPrio<<"\n";
 	    //std::cout << "r_ageOfflow: "<<r_ageOfFlow<<"\n";
-        // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
+	    // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
 	    return grantPrio;
     }
 }
