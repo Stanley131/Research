@@ -35,7 +35,7 @@ print "limits = {" + ", ".join(map("{:.4E}".format,percentile_values[1:-1][::-1]
 
 print "Rawprio by Logspace"
 logspace_values = []
-for i,lg in enumerate(np.logspace(np.log(min(sorted_rawprios)), np.log(max(sorted_rawprios)), num=8,dtype=float)):
+for i,lg in enumerate(np.logspace(np.log(min(sorted_rawprios)), np.log(max(sorted_rawprios)), num=10,dtype=float)):
 # for i,lg in enumerate(np.logspace(np.log10(min(sorted_rawprios)), np.log10(max(sorted_rawprios)), base=10, num=10, dtype=float)):
     logspace_values.append(lg)
     #print "{}th logspace value = {}".format(i, lg)
