@@ -2623,14 +2623,14 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
 	alpha_obj << r_alpha;
 	std::string r_alpha_str = alpha_obj.str();
 	
-	/*
+	
 	//open the file and write to it 
 	std::ofstream alpha_result;
 	std::string alpha_fileName = "/users/mkunal/ResultDir/alpha_limit/prio_" + r_mode + "_" + workloadTypye + "_" +  r_alpha_str;
 	alpha_result.open(alpha_fileName.c_str(), std::ios_base::app);
 	//flow_result << r_flowSize << " " << r_ageOfFlow.dbl() << "\n";
 	//flow_result.close();
-	*/
+
     
     if (mesg == NULL || homaConfig->r_mode == "homa") {    
     	grantPrio =
@@ -2665,10 +2665,10 @@ HomaTransport::ReceiveScheduler::SchedSenders::getPrioForMesg(SchedState& st)
     	    uint32_t r_bytesRemaining = mesg -> bytesToReceive;
 	    //simtime_t r_ageOfFlow = (simTime() - mesg -> msgCreationTime) * (0.001);
 	    simtime_t r_ageOfFlow = simTime().inUnit(SIMTIME_NS) - (mesg -> msgCreationTime).inUnit(SIMTIME_NS);
-	    double rawPrio = log(r_ageOfFlow.dbl()) / (homaConfig->r_alpha * log(r_bytesRemaining));
+	    double rawPrio = log(r_ageOfFlow.dbl()) -  (homaConfig->r_alpha * log(r_bytesRemaining));
 	    grantPrio= getGrantPrioFromRawPrio(homaConfig->r_mode, rawPrio);
-	    //alpha_result << r_bytesRemaining  << " " << rawPrio << " " << grantPrio<< "\n";
-	    //alpha_result.close();
+	    alpha_result << r_bytesRemaining  << " " << rawPrio << " " << grantPrio<< "\n";
+	    alpha_result.close();
 	    //std::cout << "rawPrio: "<<rawPrio<<"\n";
 	    //std::cout << "r_ageOfflow: "<<r_ageOfFlow<<"\n";
 	    // std::cout<<"msg  msgId: "<<st.msgId << "  bytesToReceive: "<< mesg -> bytesToReceive <<"  grantPrio: "<<grantPrio<<"\n";
