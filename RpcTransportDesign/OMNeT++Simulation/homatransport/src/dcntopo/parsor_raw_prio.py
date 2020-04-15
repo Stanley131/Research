@@ -35,7 +35,7 @@ print "limits = {" + ", ".join(map("{:.4E}".format,percentile_values[1:-1][::-1]
 
 print "Rawprio by Logspace"
 logspace_values = []
-for i,lg in enumerate(np.logspace(np.log(min(sorted_rawprios)), np.log(max(sorted_rawprios)))):
+for i,lg in enumerate(np.logspace(np.log(min(sorted_rawprios)), np.log(max(sorted_rawprios)), num=8,dtype=float)):
 # for i,lg in enumerate(np.logspace(np.log10(min(sorted_rawprios)), np.log10(max(sorted_rawprios)), base=10, num=10, dtype=float)):
     logspace_values.append(lg)
     #print "{}th logspace value = {}".format(i, lg)
@@ -47,7 +47,7 @@ for i,ln in enumerate(np.linspace(min(sorted_rawprios), max(sorted_rawprios), nu
     linspace_values.append(ln)
     #print "{}th linspace value = {}".format(i, ln)
 print "limits = {" + ", ".join(map("{:.4E}".format,linspace_values[1:-1][::-1])) + "};"
-
+"""
 print "8 Evenly Spaced Values from the Ranked RawPrios:"
 #print "print minprio: ",sorted_rawprios[0]
 #print "print maxprio: ",sorted_rawprios[-1]
@@ -56,7 +56,7 @@ for k, rp in enumerate(sorted_rawprios):
    # if k > cutoff_rank and k % ((len(sorted_rawprios)-cutoff_rank) // 8) == 0:
    limits.append(rp)
 print "limits = {" + ", ".join(map("{:.4E}".format,limits[::-1])) + "};"
-
+"""
 plt.plot([k for k in range(len(sorted_rawprios))], sorted_rawprios, linestyle='-')
 plt.xlabel("Rank")
 plt.ylabel("Raw Priority Value")
